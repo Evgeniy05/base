@@ -17,6 +17,6 @@ public static void main (String args[] ){
 	Books read = new Books("Fall","Down");
 	System.out.println(my.number);
 	System.out.println(read.author+read.nameBook+read.number);
-	System.out.println();
+	
 }
 }
