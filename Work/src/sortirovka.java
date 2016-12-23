@@ -1,5 +1,5 @@
 import java.util.Arrays;
-public class on {
+public class sortirovka {
 String name;
 
 
