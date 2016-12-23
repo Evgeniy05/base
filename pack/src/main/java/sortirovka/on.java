@@ -1,4 +1,4 @@
-package pack;
+package sortirovka;
 import java.util.Arrays;
 public class on {
 String name;
