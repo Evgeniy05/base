@@ -10,7 +10,7 @@
 	        return baseSalary+bonus;
 	    }
 	    public void setBonus(double b){
-	    	bonus=b+100;
+	    	bonus=b;
 	    }
 	    public double getBonus(){
 	    	return bonus;
