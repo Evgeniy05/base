@@ -7,7 +7,12 @@ package result;
 public class App 
 {
     public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+    {int a=5;
+     int b=6;
+     String r="";
+     int c=0;
+     r=Integer.toString(a)+Integer.toString(b);
+     c=Integer.valueOf(r);
+        System.out.println( c);
     }
 }
