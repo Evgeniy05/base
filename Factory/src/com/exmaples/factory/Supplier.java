@@ -1,19 +1,19 @@
 package com.exmaples.factory;
 
 public class Supplier {
-	public Supplier(int id,String name){
-		this.id=id;
-		this.name=name;
+	public Supplier(int id, String name) {
+		this.id = id;
+		this.name = name;
 	}
-public int getId() {
+
+	public int getId() {
 		return id;
 	}
-	
+
 	public String getName() {
-	return name;
-}
+		return name;
+	}
 
-private int id;
-private String name;
-
+	private int id;
+	private String name;
 }

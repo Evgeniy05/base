@@ -8,16 +8,13 @@ public class Worker {
 		this.id = id;
 	}
 
-	public Item getItem() {
-		listItem.add(getWarehouseAccessory.getItems());
-		listItem.add(e);
-		listItem.add(e);
-	}
-
-	public Auto createCar(){
-		
-		Auto car= new Auto(setId()),listItem..,getbody,getaccessory);
+	public Auto createCar() {
+		int idAuto = 1;
+		Auto car = new Auto(idAuto, engine, body, accessory);
+		idAuto = nextIdAuto;
+		nextIdAuto++;
 		return car;
+
 	}
 
 	public int getId() {
@@ -32,4 +29,6 @@ public class Worker {
 	private int id;
 	private List<Item> listItem = new ArrayList<>(3);
 	private static int nextId = 1;
+	private static int nextIdAuto = 1;
+	private Item engine, body, accessory;
 }
