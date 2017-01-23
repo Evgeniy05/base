@@ -2,7 +2,7 @@ package com.exmaples.factory;
 
 import java.util.concurrent.Callable;
 
-public class StorageDeatailCounter implements Callable<Integer> {
+public class StorageItemCounter implements Callable<Integer> {
 	private int count;
 
 	@Override

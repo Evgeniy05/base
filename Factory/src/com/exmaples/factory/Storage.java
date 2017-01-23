@@ -32,22 +32,24 @@ public class Storage {
 		return size;
 	}
 
-	public void addItem(Item item) {
-		if (items.size() >= size) {
-			return;
+	public int getFreeValue() {
+		return size - items.size();
+	}
+
+	public synchronized void addItem(Item item) throws InterruptedException {
+		while (items.size() == size) {
+			wait();
 		}
 		items.putIfAbsent(item.getDate(), item);
+		notifyAll();
 	}
 
 	public Collection<Item> getItems() {
 		return items.values();
 	}
 
-	public Item getItem() {
-		if (items.entrySet().iterator().hasNext() == true) {
-			item = items.entrySet().iterator().next().getValue();
-			items.remove(item);
-		}
+	public Item getItem(Item item) {
+		items.remove(item);
 		return item;
 	}
 }

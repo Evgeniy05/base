@@ -10,10 +10,15 @@ public class Worker {
 		setId();
 	}
 
-	public Auto createCar(Item engine, Item body, Item accessory) {
-		Auto car = new Auto(engine, body, accessory);
+	public void addItem(Item item) {
+		listItem.add(item);
+	}
+
+	public synchronized void createCar(List listItemToCar) throws InterruptedException {
+		while (listItemToCar.get(0) == null || listItemToCar.get(1) == null || listItemToCar.get(2) == null)
+			wait();
+		Auto car = new Auto((Item) listItemToCar.get(0), (Item) listItemToCar.get(1), (Item) listItemToCar.get(2));
 		listAuto.add(car);
-		return car;
 
 	}
 
@@ -34,5 +39,6 @@ public class Worker {
 	private String name;
 	private static List<Auto> listAuto = new ArrayList<>();
 	private static int nextId = 1;
+	private List<Item> listItem = new ArrayList<>(3);
 
 }

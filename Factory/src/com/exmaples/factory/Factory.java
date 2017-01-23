@@ -9,35 +9,62 @@ public class Factory {
 		storages.put(ACCESSORY, new Storage(Integer.parseInt(config.get(Property.STORAGE_ACCESSORY_SIZE)), ACCESSORY));
 		storages.put(ENGINE, new Storage(Integer.parseInt(config.get(Property.STORAGE_ENGINE_SIZE)), ENGINE));
 		storages.put(BODY, new Storage(Integer.parseInt(config.get(Property.STORAGE_BODY_SIZE)), BODY));
-		getListSupplierEngine();
-		getListSupplierBody();
-		getListSupplierAccessory();
+		getListSupplier(ENGINE);
+		getListSupplier(BODY);
+		getListSupplier(ACCESSORY);
 		getListWorker();
 		getListDealer();
 	}
 
-	public Item getItemStorage(String name) {
-	      
-		if(storages.get(name).getSize()==0){
-	     wait;
-		} 
-		item=storages.get(name).getItem();
-		return item;
+	public Map<String, Storage> getStorages() {
+		return storages;
 	}
 
-	public Item createItem(Supplier engine) {
-		return new Engine(engine);
+	public synchronized void createItemEngine(Supplier supplier) throws InterruptedException {
+
+		while (storages.get(ENGINE).getFreeValue() == 0)
+			wait();
+		storages.get(ENGINE).addItem(new Engine(supplier));
+		notifyAll();
+	}
+
+	public synchronized void createItemBody(Supplier supplier) throws InterruptedException {
+
+		while (storages.get(BODY).getFreeValue() == 0)
+			wait();
+		storages.get(BODY).addItem(new Engine(supplier));
+		notifyAll();
+	}
+
+	public synchronized void createItemAccessory(Supplier supplier) throws InterruptedException {
+
+		while (storages.get(ACCESSORY).getFreeValue() == 0)
+			wait();
+		storages.get(ACCESSORY).addItem(new Engine(supplier));
+		notifyAll();
+	}
+
+	public synchronized void getEngineStorage(Item engine, Worker worker) throws InterruptedException {
+
+		while (storages.get(ENGINE).getFreeValue() == 0)
+			wait();
+		worker.addItem(storages.get(ENGINE).getItem(item));
 
 	}
 
-	public Item createBody(Supplier body) {
+	public synchronized void getBodyStorage(Item body, Worker worker) throws InterruptedException {
 
-		return new Body(body);
+		while (storages.get(BODY).getFreeValue() == 0)
+			wait();
+		worker.addItem(storages.get(BODY).getItem(item));
 
 	}
 
-	public Item createAccessory(Supplier accessory) {
-		return new Accessory(accessory);
+	public synchronized void getAccessoryStorage(Item accessory, Worker worker) throws InterruptedException {
+
+		while (storages.get(ACCESSORY).getFreeValue() == 0)
+			wait();
+		worker.addItem(storages.get(ACCESSORY).getItem(item));
 
 	}
 
@@ -85,16 +112,16 @@ public class Factory {
 		return storages.get(id);
 	}
 
-	public List<Supplier> getListSupplierEngine() {
-		return listSupplierEngine;
-	}
-
-	public List<Supplier> getListSupplierBody() {
-		return listSupplierBody;
-	}
-
-	public List<Supplier> getListSupplierAccessory() {
-		return listSupplierAccessory;
+	public List<Supplier> getListSupplier(String name) {
+		if (name == ENGINE)
+			listSuppliers = listSupplierEngine;
+		if (name == BODY) {
+			listSuppliers = listSupplierBody;
+		}
+		if (name == ACCESSORY) {
+			listSuppliers = listSupplierAccessory;
+		}
+		return listSuppliers;
 	}
 
 	public List<Dealer> getListDealer() {
@@ -112,6 +139,7 @@ public class Factory {
 	}
 
 	List<Item> listItem = new ArrayList<Item>();
+	List<Supplier> listSuppliers = new ArrayList<Supplier>();
 	List<Supplier> listSupplierEngine = new ArrayList<Supplier>();
 	List<Supplier> listSupplierBody = new ArrayList<Supplier>();
 	List<Supplier> listSupplierAccessory = new ArrayList<Supplier>();
