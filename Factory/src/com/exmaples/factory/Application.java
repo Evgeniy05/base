@@ -1,19 +1,18 @@
 package com.exmaples.factory;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 public class Application {
 	public static void main(String[] args) {
-
-		Accessory a = new Accessory(new Supplier("BODY"));
-		Accessory b = new Accessory(new Supplier("B"));
-		Accessory c = new Accessory(new Supplier("BY"));
-
-		Body d1 = new Body(new Supplier("Body"));
-		Body d2 = new Body(new Supplier("Body"));
-		System.out.println(a.getDate());
-		System.out.println(b.getDate());
-		System.out.println(c.getDate());
-		System.out.println(d1.getDate());
-		System.out.println(d2.getDate());
+		String name = "";
+		Factory factory = new Factory();
+		name = factory.BODY;
+		ExecutorService pool = Executors.newFixedThreadPool(Integer.valueOf(Property.getConfig().get(name)));
+		SupplierItemCounter counterSupplier = new SupplierItemCounter(factory, name, pool);
+		Future<Integer> result = pool.submit(counterSupplier);
 
 	}
+
 }

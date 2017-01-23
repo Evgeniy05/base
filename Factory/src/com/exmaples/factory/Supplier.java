@@ -1,7 +1,7 @@
 package com.exmaples.factory;
 
 public class Supplier {
-	public Supplier(int id, String name) {
+	public Supplier(String name) {
 		this.id = id;
 		this.name = name;
 	}

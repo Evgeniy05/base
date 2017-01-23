@@ -6,11 +6,9 @@ import java.util.Map;
 
 public class Factory {
 	public Factory() {
-		storages.put(ACCESSORY,
-				new Warehouse(Integer.parseInt(config.get(Property.STORAGE_ACCESSORY_SIZE)), ACCESSORY));
-		storages.put(ENGINE, new Warehouse(Integer.parseInt(config.get(Property.STORAGE_ENGINE_SIZE)), ENGINE));
-		storages.put(BODY, new Warehouse(Integer.parseInt(config.get(Property.STORAGE_BODY_SIZE)), BODY));
-		storages.put(AUTO, new Warehouse(Integer.parseInt(config.get(Property.STORAGE_AUTO_SIZE)), AUTO));
+		storages.put(ACCESSORY, new Storage(Integer.parseInt(config.get(Property.STORAGE_ACCESSORY_SIZE)), ACCESSORY));
+		storages.put(ENGINE, new Storage(Integer.parseInt(config.get(Property.STORAGE_ENGINE_SIZE)), ENGINE));
+		storages.put(BODY, new Storage(Integer.parseInt(config.get(Property.STORAGE_BODY_SIZE)), BODY));
 		getListSupplierEngine();
 		getListSupplierBody();
 		getListSupplierAccessory();
@@ -18,44 +16,35 @@ public class Factory {
 		getListDealer();
 	}
 
-	// public void setId(Object obj){
-	// if(obj.getClass().getSimpleName()=="Accessory"){
-	//
-	// }
-	// if(obj.getClass().getSimpleName()=="Accessory"){
-	// id=;
-	// }
-	// if(obj.getClass().getSimpleName()=="Accessory"){
-	// id=;
-	// }
-	// if(obj.getClass().getSimpleName()=="Accessory"){
-	// id=;
-	// }
-	// if(obj.getClass().getSimpleName()=="Accessory"){
-	// id=;
-	// }
-	// if(obj.getClass().getSimpleName()=="Accessory"){
-	// id=;
-	// }
-	// if(obj.getClass().getSimpleName()=="Accessory"){
-	// id=;
-	// }
-	//
-	// }
-	public Item createItem(){
-		
-			int idItem=1;
-			long date=1;
-			item=new Accessory(idItem,.,getName(),date);
-		}return item;
+	public Item getItemStorage(String name) {
+	      
+		if(storages.get(name).getSize()==0){
+	     wait;
+		} 
+		item=storages.get(name).getItem();
+		return item;
+	}
+
+	public Item createItem(Supplier engine) {
+		return new Engine(engine);
+
+	}
+
+	public Item createBody(Supplier body) {
+
+		return new Body(body);
+
+	}
+
+	public Item createAccessory(Supplier accessory) {
+		return new Accessory(accessory);
 
 	}
 
 	public List<Supplier> loadSuppliersEngine() {
 		int k = Integer.parseInt(config.get(Property.ENGINE_SUPPLIERS));
 		for (int i = 0; i < k; i++) {
-			int id = 1 * k;
-			listSupplierEngine.add(new Supplier(id, ENGINE));
+			listSupplierEngine.add(new Supplier(ENGINE));
 		}
 		return listSupplierEngine;
 	}
@@ -63,8 +52,7 @@ public class Factory {
 	public List<Supplier> loadSuppliersBody() {
 		int k = Integer.parseInt(config.get(Property.BODY_SUPPLIERS));
 		for (int i = 0; i < k; i++) {
-			int id = 1 * k;
-			listSupplierBody.add(new Supplier(id, BODY));
+			listSupplierBody.add(new Supplier(BODY));
 		}
 		return listSupplierBody;
 	}
@@ -72,8 +60,7 @@ public class Factory {
 	public List<Supplier> loadSuppliersAccessory() {
 		int k = Integer.parseInt(config.get(Property.ACCESSORY_SUPPLIERS));
 		for (int i = 0; i < k; i++) {
-			int id = 1 * k;
-			listSupplierAccessory.add(new Supplier(id, ACCESSORY));
+			listSupplierAccessory.add(new Supplier(ACCESSORY));
 		}
 		return listSupplierAccessory;
 	}
@@ -81,8 +68,7 @@ public class Factory {
 	public List<Dealer> loadDealers() {
 		int k = Integer.parseInt(config.get(Property.DEALERS));
 		for (int i = 0; i < k; i++) {
-			int id = 1 * k;
-			listDealer.add(new Dealer(id, DEALER));
+			listDealer.add(new Dealer(DEALER));
 		}
 		return listDealer;
 	}
@@ -90,30 +76,13 @@ public class Factory {
 	public List<Worker> loadWorkers() {
 		int k = Integer.parseInt(config.get(Property.WORKERS));
 		for (int i = 0; i < k; i++) {
-			int id = 1 * k;
-			listWorker.add(new Worker(id));
+			listWorker.add(new Worker(WORKER));
 		}
 		return listWorker;
 	}
 
-	public Warehouse getWarehouseById(String id) {
+	public Storage getStorageById(String id) {
 		return storages.get(id);
-	}
-
-	public Warehouse getWarehouseAccessory() {
-		return storages.get(ACCESSORY);
-	}
-
-	public Warehouse getWarehouseEgine() {
-		return storages.get(ENGINE);
-	}
-
-	public Warehouse getWarehouseBody() {
-		return storages.get(BODY);
-	}
-
-	public Warehouse getWarehouseAuto() {
-		return storages.get(AUTO);
 	}
 
 	public List<Supplier> getListSupplierEngine() {
@@ -148,12 +117,15 @@ public class Factory {
 	List<Supplier> listSupplierAccessory = new ArrayList<Supplier>();
 	List<Dealer> listDealer = new ArrayList<Dealer>();
 	List<Worker> listWorker = new ArrayList<Worker>();
-	private Map<String, Warehouse> storages;
+	private Map<String, Storage> storages;
 	private Map<String, String> config = Property.getConfig();
 	public static final String ACCESSORY = "accessory";
 	public static final String ENGINE = "engine";
 	public static final String BODY = "body";
 	public static final String AUTO = "auto";
 	public static final String DEALER = "Dealer";
-	private Item item;
+	public static final String WORKER = "Worker";
+	private final String SUPPLIER = "Supplier";
+	private Item item;;
+
 }
