@@ -1,9 +1,23 @@
 package com.exmaples.factory;
 
 public class Body extends Item {
-	public Body(int id, String name, Supplier supplier, long date) {
-		super(id, name, supplier, date);
+	public Body(Supplier supplier) {
+		super(supplier);
+		id = super.getId();
+		name = super.BODY;
+		date = super.getDate();
 	}
 
-	String color;
+	@Override
+	public int getId() {
+		return id;
+	}
+
+	@Override
+	public String getDate() {
+		return date;
+	}
+
+	String color, name, date;
+	int id;
 }

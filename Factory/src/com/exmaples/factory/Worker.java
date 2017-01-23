@@ -4,17 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Worker {
-	public Worker(int id) {
-		this.id = id;
+	public Worker(String name) {
+		this.name = name;
+		id = 0;
+		setId();
 	}
 
-	public Auto createCar() {
-		int idAuto = 1;
-		Auto car = new Auto(idAuto, engine, body, accessory);
-		idAuto = nextIdAuto;
-		nextIdAuto++;
+	public Auto createCar(Item engine, Item body, Item accessory) {
+		Auto car = new Auto(engine, body, accessory);
+		listAuto.add(car);
 		return car;
 
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public int getId() {
@@ -22,13 +26,13 @@ public class Worker {
 	}
 
 	public void setId() {
-		this.id = nextId;
+		id = nextId;
 		nextId++;
 	}
 
 	private int id;
-	private List<Item> listItem = new ArrayList<>(3);
+	private String name;
+	private static List<Auto> listAuto = new ArrayList<>();
 	private static int nextId = 1;
-	private static int nextIdAuto = 1;
-	private Item engine, body, accessory;
+
 }

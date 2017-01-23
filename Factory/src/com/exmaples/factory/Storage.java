@@ -1,14 +1,14 @@
 package com.exmaples.factory;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Storage {
-	private Map<String, Item> items = new HashMap<>();
+	private ConcurrentHashMap<String, Item> items = new ConcurrentHashMap<>();
 	private int size, id;
 	private String name;
 	private static int nextId = 1;
+	private Item item;
 
 	public Storage(int size, String name) {
 		this.size = size;
@@ -36,10 +36,18 @@ public class Storage {
 		if (items.size() >= size) {
 			return;
 		}
-		items.put(item.getDate(), item);
+		items.putIfAbsent(item.getDate(), item);
 	}
 
 	public Collection<Item> getItems() {
 		return items.values();
+	}
+
+	public Item getItem() {
+		if (items.entrySet().iterator().hasNext() == true) {
+			item = items.entrySet().iterator().next().getValue();
+			items.remove(item);
+		}
+		return item;
 	}
 }

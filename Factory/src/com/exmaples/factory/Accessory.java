@@ -1,9 +1,21 @@
 package com.exmaples.factory;
 
 public class Accessory extends Item {
-	public Accessory(int id, String name, Supplier supplier, long date) {
-		super(id, name, supplier, date);
+	public Accessory(Supplier supplier) {
+		super(supplier);
+		id = super.getId();
+		date = super.getDate();
+		name = super.ACCESSORY;
+	}
 
+	@Override
+	public int getId() {
+		return id;
+	}
+
+	@Override
+	public String getDate() {
+		return date;
 	}
 
 	public int getPrice() {
@@ -14,6 +26,6 @@ public class Accessory extends Item {
 		this.price = price;
 	}
 
-	private int price;
-
+	private int price, id;
+	private String name, date;
 }
