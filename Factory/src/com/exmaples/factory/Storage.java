@@ -11,6 +11,7 @@ public class Storage extends Item {
 	private long size;
 	private String name, date;
 	private Item item;
+	public int result = 0;
 
 	public Storage(int size, String name) {
 		super(size, name);

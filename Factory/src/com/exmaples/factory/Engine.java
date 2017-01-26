@@ -10,6 +10,23 @@ public class Engine extends Item {
 
 	}
 
+	public Engine() {
+		super();
+		this.name = Factory.getNameEngine();
+		this.id = super.getId();
+		this.date = super.getDate();
+		this.supplier = null;
+	}
+
+	@Override
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
+
 	public int getValue() {
 		return value;
 	}
@@ -35,5 +52,6 @@ public class Engine extends Item {
 
 	private int value, id;
 	private String name, date;
+	private Supplier supplier;
 
 }

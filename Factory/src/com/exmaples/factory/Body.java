@@ -3,9 +3,26 @@ package com.exmaples.factory;
 public class Body extends Item {
 	public Body(Supplier supplier) {
 		super(supplier);
-		id = super.getId();
-		name = Factory.getNameBody();
-		date = super.getDate();
+		this.id = super.getId();
+		this.name = Factory.getNameBody();
+		this.date = super.getDate();
+	}
+
+	public Body() {
+		super();
+		this.id = super.getId();
+		this.date = super.getDate();
+		this.name = Factory.getNameEngine();
+		this.supplier = null;
+	}
+
+	@Override
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
 	}
 
 	@Override
@@ -25,5 +42,6 @@ public class Body extends Item {
 
 	private String color, name, date;
 	private int id;
+	private Supplier supplier;
 
 }

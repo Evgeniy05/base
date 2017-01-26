@@ -9,6 +9,23 @@ public class Accessory extends Item {
 
 	}
 
+	public Accessory() {
+		super();
+		this.id = super.getId();
+		this.date = super.getDate();
+		this.name = Factory.getNameEngine();
+		this.supplier = null;
+	}
+
+	@Override
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
+
 	@Override
 	public int getId() {
 		return id;
@@ -34,4 +51,5 @@ public class Accessory extends Item {
 
 	private int price, id;
 	private String name, date;
+	private Supplier supplier;
 }

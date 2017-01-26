@@ -20,8 +20,6 @@ public class Item {
 		this.id = 0;
 		this.idInt = 0;
 		this.date = "";
-		this.name = "";
-		this.setSupplier(supplier);
 		this.setName(supplier.getName());
 		this.setId();
 		this.setDate();
@@ -50,12 +48,13 @@ public class Item {
 	}
 
 	public Item() {
+		this.name = "";
 		this.id = 0;
 		this.idInt = 0;
 		this.date = "";
-		this.name = "";
 		this.setId();
 		this.setDate();
+
 	}
 
 	public Item(Engine engine, Body body, Accessory accessory) {
@@ -146,10 +145,6 @@ public class Item {
 
 	public Supplier getSupplier() {
 		return supplier;
-	}
-
-	private void setSupplier(Supplier supplier) {
-		this.supplier = supplier;
 	}
 
 	public void setSize(long size) {

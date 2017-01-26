@@ -13,6 +13,8 @@ public class Factory {
 		getStorage();
 		loadWorkers();
 		loadDealers();
+		worker = getWorker();
+		dealer = getDealer();
 		supplierEngine = getSupplier(ENGINE);
 		supplierBody = getSupplier(BODY);
 		supplierAccessory = getSupplier(ACCESSORY);
@@ -24,9 +26,6 @@ public class Factory {
 		transferItem(supplierBody.getStorage(), getStorage().get(BODY), supplierBody.getStorage().getItem(BODY));
 		transferItem(supplierAccessory.getStorage(), getStorage().get(ACCESSORY),
 				supplierAccessory.getStorage().getItem(ACCESSORY));
-		worker = getWorker();
-		dealer = getDealer();
-
 		transferItem(getStorage().get(ENGINE), worker.getStorage(), getStorage().get(ENGINE).getItem(ENGINE));
 		transferItem(getStorage().get(BODY), worker.getStorage(), getStorage().get(BODY).getItem(BODY));
 		transferItem(getStorage().get(ACCESSORY), worker.getStorage(), getStorage().get(ACCESSORY).getItem(ACCESSORY));
@@ -34,6 +33,7 @@ public class Factory {
 		car.getStorage().addItem(car);
 		transferItem(car.getStorage(), getStorage().get(AUTO), car.getStorage().getItem(AUTO));
 		transferItem(getStorage().get(AUTO), dealer.getStorage(), getStorage().get(AUTO).getItem(AUTO));
+		dealer.sail();
 	}
 
 	public void sail(Dealer dealer) {

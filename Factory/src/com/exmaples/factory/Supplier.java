@@ -7,7 +7,16 @@ public class Supplier extends Item {
 		id = super.getId();
 		date = super.getDate();
 		setStorage(name);
+		flag = true;
+		speed = 1000;
+	}
 
+	public long getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(long speed) {
+		this.speed = speed;
 	}
 
 	@Override
@@ -33,7 +42,18 @@ public class Supplier extends Item {
 		return storage;
 	}
 
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+
 	private String name, date;
 	private int id;
+	private long speed;
+
 	private Storage storage;
+	private boolean flag;
 }
