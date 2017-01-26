@@ -62,7 +62,7 @@ public class Item {
 		this.engine = engine;
 		this.body = body;
 		this.accessory = accessory;
-		this.name = "car";
+		this.name = Factory.getNameAuto();
 		this.id = 0;
 		this.idInt = 0;
 		this.date = "";
@@ -129,7 +129,7 @@ public class Item {
 					+ String.valueOf(idInt);
 			date = idStr;
 		}
-		System.out.println(date);
+		// System.out.println(date);
 	}
 
 	public void setName(String name) {

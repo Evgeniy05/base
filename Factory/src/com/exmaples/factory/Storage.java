@@ -14,15 +14,16 @@ public class Storage extends Item {
 
 	public Storage(int size, String name) {
 		super(size, name);
+		this.name = name;
 		this.id = super.getId();
 		this.date = super.getDate();
 		this.size = size;
-		this.name = name;
 		this.setStorage();
 	}
 
 	public Storage(String name) {
 		super(name);
+		this.name = name;
 		this.id = super.getId();
 		this.date = super.getDate();
 		this.name = name;
@@ -49,8 +50,12 @@ public class Storage extends Item {
 		return name;
 	}
 
-	public void setStorage() {
+	private void setStorage() {
 		items = new ConcurrentHashMap<>();
+	}
+
+	public ConcurrentHashMap<String, Item> getStorage() {
+		return items;
 	}
 
 	public long getValue() {
@@ -70,17 +75,12 @@ public class Storage extends Item {
 	}
 
 	public Item getItem(String name) {
-		item.setName(name);
-		Iterator<Entry<String, Item>> it = items.entrySet().iterator();
-		while (it.hasNext()) {
-			{
-				item = it.next().getValue();
-				System.out.println(item.getDate());
-				it.remove();
+		for (String key : items.keySet()) {
+			if (items.get(key).getName() == name) {
+				item = items.get(key);
+				itemRemove(item);
 			}
-
 		}
-
 		return item;
 	}
 

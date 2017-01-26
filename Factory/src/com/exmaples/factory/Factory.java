@@ -16,28 +16,24 @@ public class Factory {
 		supplierEngine = getSupplier(ENGINE);
 		supplierBody = getSupplier(BODY);
 		supplierAccessory = getSupplier(ACCESSORY);
-		Engine engineCar = createEngine(supplierEngine, ENGINE);
-		AddItem(supplierEngine.getStorage(), engineCar);
-		Body bodyCar = createBody(supplierBody, BODY);
-		AddItem(supplierBody.getStorage(), bodyCar);
-		Accessory accessoryCar = createAccessory(supplierAccessory, ACCESSORY);
-		AddItem(supplierAccessory.getStorage(), accessoryCar);
+		createEngine(supplierEngine, ENGINE);
+		createBody(supplierBody, BODY);
+		createAccessory(supplierAccessory, ACCESSORY);
+		transferItem(supplierEngine.getStorage(), getStorage().get(ENGINE),
+				supplierEngine.getStorage().getItem(ENGINE));
+		transferItem(supplierBody.getStorage(), getStorage().get(BODY), supplierBody.getStorage().getItem(BODY));
+		transferItem(supplierAccessory.getStorage(), getStorage().get(ACCESSORY),
+				supplierAccessory.getStorage().getItem(ACCESSORY));
 		worker = getWorker();
 		dealer = getDealer();
 
-		transferItem(supplierEngine.getStorage(), worker.getStorage(), engineCar);
-		transferItem(supplierBody.getStorage(), worker.getStorage(), bodyCar);
-		transferItem(supplierAccessory.getStorage(), worker.getStorage(), accessoryCar);
+		transferItem(getStorage().get(ENGINE), worker.getStorage(), getStorage().get(ENGINE).getItem(ENGINE));
+		transferItem(getStorage().get(BODY), worker.getStorage(), getStorage().get(BODY).getItem(BODY));
+		transferItem(getStorage().get(ACCESSORY), worker.getStorage(), getStorage().get(ACCESSORY).getItem(ACCESSORY));
 		car = createCar(worker);
-		// transferItem(worker.getStorage(), car.getStorage(),
-		// worker.getEngine());
-		// transferItem(worker.getStorage(), car.getStorage(),
-		// worker.getBody());
-		// transferItem(worker.getStorage(), car.getStorage(),
-		// worker.getAccessory());
-		// transferItem(car.getStorage(), getStorage().get(AUTO), car);
-		// transferItem(getStorage().get(AUTO), dealer.getStorage(),
-		// getStorage().get(AUTO).getItemRemove());
+		car.getStorage().addItem(car);
+		transferItem(car.getStorage(), getStorage().get(AUTO), car.getStorage().getItem(AUTO));
+		transferItem(getStorage().get(AUTO), dealer.getStorage(), getStorage().get(AUTO).getItem(AUTO));
 	}
 
 	public void sail(Dealer dealer) {
@@ -58,31 +54,33 @@ public class Factory {
 		body = (Body) worker.getStorage().getItem(BODY);
 		accessory = (Accessory) worker.getStorage().getItem(ACCESSORY);
 		Auto car = new Auto(engine, body, accessory);
-		// System.out.println(engine.getDate());
-		// System.out.println(body.getDate());
-		// System.out.println(accessory.getDate());
 		return car;
 	}
 
-	public Engine createEngine(Supplier supplier, String type) {
+	public void createEngine(Supplier supplier, String type) {
 		if (supplier.getName() == type) {
 			engine = new Engine(supplier);
+			AddItem(supplier.getStorage(), engine);
 		}
-		return engine;
+
 	}
 
-	public Body createBody(Supplier supplier, String type) {
+	public void createBody(Supplier supplier, String type) {
 		if (supplier.getName() == type) {
 			body = new Body(supplier);
+			// System.out.println(body.getDate());
+			AddItem(supplier.getStorage(), body);
 		}
-		return body;
+
 	}
 
-	public Accessory createAccessory(Supplier supplier, String type) {
+	public void createAccessory(Supplier supplier, String type) {
 		if (supplier.getName() == type) {
 			accessory = new Accessory(supplier);
+			// System.out.println(accessory.getDate());
+			AddItem(supplier.getStorage(), accessory);
 		}
-		return accessory;
+
 	}
 
 	public static Map<String, Storage> loadStorages() {
@@ -234,9 +232,9 @@ public class Factory {
 	private static final String WORKER = "Worker";
 	private static Map<String, Storage> storages = new HashMap<>();
 	public Item item;
-	Engine engine;
-	Body body;
-	Accessory accessory;
+	private Engine engine;
+	private Body body;
+	private Accessory accessory;
 	public Auto car;
 	public Worker worker;
 	public Dealer dealer;
