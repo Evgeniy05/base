@@ -3,9 +3,10 @@ package com.exmaples.factory;
 public class Accessory extends Item {
 	public Accessory(Supplier supplier) {
 		super(supplier);
+		name = Factory.getNameAccessory();
 		id = super.getId();
 		date = super.getDate();
-		name = super.ACCESSORY;
+
 	}
 
 	@Override
@@ -16,6 +17,11 @@ public class Accessory extends Item {
 	@Override
 	public String getDate() {
 		return date;
+	}
+
+	@Override
+	public String getName() {
+		return name;
 	}
 
 	public int getPrice() {

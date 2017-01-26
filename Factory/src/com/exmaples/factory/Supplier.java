@@ -1,56 +1,39 @@
 package com.exmaples.factory;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
-
-public class Supplier {
+public class Supplier extends Item {
 	public Supplier(String name) {
-		id = 0;
-		date = "";
-		setId();
-		setDate();
+		super(name);
 		this.name = name;
+		id = super.getId();
+		date = super.getDate();
+		setStorage(name);
+
 	}
 
+	@Override
 	public int getId() {
 		return id;
 	}
 
-	public void setId() {
-		id = nextId;
-		nextId++;
-	}
-
+	@Override
 	public String getName() {
 		return name;
 	}
 
-	private void setDate() {
-		GregorianCalendar s = new GregorianCalendar();
-		int year = s.get(Calendar.YEAR);
-		String idName = this.getName();
-		if (key.get(idName) == null) {
-			key.put(idName, 1);
-			idInt = 1;
-			String idStr = idName + "-" + year + "-" + "/" + String.valueOf(idInt);
-			date = idStr;
-		} else {
-			nextDate = key.get(idName) + 1;
-			idInt = nextDate;
-			key.put(idName, nextDate);
-			String idStr = idName + "-" + year + "-" + "/" + String.valueOf(idInt);
-			date = idStr;
-		}
-	}
-
+	@Override
 	public String getDate() {
 		return date;
 	}
 
-	private int id, idInt, nextDate;
+	private void setStorage(String name) {
+		storage = new Storage(name);
+	}
+
+	public Storage getStorage() {
+		return storage;
+	}
+
 	private String name, date;
-	private static int nextId = 1;
-	public static Map<String, Integer> key = new HashMap<>();
+	private int id;
+	private Storage storage;
 }

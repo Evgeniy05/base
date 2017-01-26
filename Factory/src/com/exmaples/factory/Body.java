@@ -4,7 +4,7 @@ public class Body extends Item {
 	public Body(Supplier supplier) {
 		super(supplier);
 		id = super.getId();
-		name = super.BODY;
+		name = Factory.getNameBody();
 		date = super.getDate();
 	}
 
@@ -18,6 +18,12 @@ public class Body extends Item {
 		return date;
 	}
 
-	String color, name, date;
-	int id;
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	private String color, name, date;
+	private int id;
+
 }

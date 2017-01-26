@@ -1,68 +1,55 @@
 package com.exmaples.factory;
 
-import java.util.concurrent.ConcurrentHashMap;
-
-public class Auto {
-	public Auto(Item engine, Item body, Item accessory) {
-		id = 0;
-		setId();
+public class Auto extends Item {
+	public Auto(Engine engine, Body body, Accessory accessory) {
+		super(engine, body, accessory);
 		this.engine = engine;
 		this.body = body;
 		this.accessory = accessory;
-		date = "";
-		setDate();
-		size = Integer.parseInt(Property.getConfig().get(Property.STORAGE_AUTO_SIZE));
-		addCar();
+		name = super.getName();
+		id = super.getId();
+		date = super.getDate();
+		setStorage(name);
 	}
 
+	@Override
 	public int getId() {
 		return id;
 	}
 
-	public void setId() {
-		id = nextId;
-		nextId++;
-	}
-
-	public void addCar() {
-		if (cars.size() >= size) {
-			return;
-		}
-		cars.putIfAbsent(this, getDate());
-	}
-
-	public Item getEngine() {
+	@Override
+	public Engine getEngine() {
 		return engine;
 	}
 
-	public Item getBody() {
+	@Override
+	public Body getBody() {
 		return body;
 	}
 
-	public Item getAccessory() {
+	@Override
+	public Accessory getAccessory() {
 		return accessory;
 	}
 
+	@Override
 	public String getDate() {
 		return date;
 	}
 
-	public void setDate() {
-		date = engine.getDate() + body.getDate() + accessory.getDate();
+	private void setStorage(String name) {
+		storage = new Storage(name);
+
 	}
 
-	public Auto getCar() {
-		if (cars.entrySet().iterator().hasNext() == true) {
-			car = cars.entrySet().iterator().next().getKey();
-		}
-		cars.remove(car);
-		return car;
+	public Storage getStorage() {
+		return storage;
 	}
 
-	private int id, size;
-	private String date;
-	private Item engine, body, accessory;
-	private static int nextId = 1;
-	public static ConcurrentHashMap<Auto, String> cars = new ConcurrentHashMap<>();
-	private Auto car;
+	private int id;
+	private String date, name;
+	private Engine engine;
+	private Body body;
+	private Accessory accessory;
+	private Storage storage;
 }

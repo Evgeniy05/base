@@ -1,44 +1,41 @@
 package com.exmaples.factory;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Worker {
-	public Worker(String name) {
-		this.name = name;
-		id = 0;
-		setId();
+public class Worker extends Item {
+	public Worker() {
+		super();
+		this.name = Factory.getNameWorker();
+		id = super.getId();
+		date = super.getDate();
+		setStorage(name);
 	}
 
-	public void addItem(Item item) {
-		listItem.add(item);
-	}
-
-	public synchronized void createCar(List listItemToCar) throws InterruptedException {
-		while (listItemToCar.get(0) == null || listItemToCar.get(1) == null || listItemToCar.get(2) == null)
-			wait();
-		Auto car = new Auto((Item) listItemToCar.get(0), (Item) listItemToCar.get(1), (Item) listItemToCar.get(2));
-		listAuto.add(car);
-
-	}
-
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public int getId() {
 		return id;
 	}
 
-	public void setId() {
-		id = nextId;
-		nextId++;
+	@Override
+	public String getDate() {
+		return date;
+	}
+
+	private void setStorage(String name) {
+		storage = new Storage(name);
+	}
+
+	public Storage getStorage() {
+		return storage;
 	}
 
 	private int id;
-	private String name;
-	private static List<Auto> listAuto = new ArrayList<>();
-	private static int nextId = 1;
-	private List<Item> listItem = new ArrayList<>(3);
-
+	private String name, date, itemDate;
+	private Storage storage;
+	private Engine engine;
+	private Body body;
+	private Accessory accessory;
 }

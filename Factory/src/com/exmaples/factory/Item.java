@@ -6,21 +6,100 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Item {
+	private String name, date;
+	private int id, idInt, nextDate, freeValue;
+	private long size;
+	private Supplier supplier;
+	private static int nextId = 1;
+	private Engine engine;
+	private Body body;
+	private Accessory accessory;
+	private static Map<String, Integer> key = new HashMap<>();
+
 	public Item(Supplier supplier) {
-		id = 0;
-		idInt = 0;
-		date = "";
-		name = "";
-		setSupplier(supplier);
-		setId();
-		setDate(this);
+		this.id = 0;
+		this.idInt = 0;
+		this.date = "";
+		this.name = "";
+		this.setSupplier(supplier);
+		this.setName(supplier.getName());
+		this.setId();
+		this.setDate();
 
 	}
 
-	private String name, date;
-	private int id, idInt, nextDate;
-	private Supplier supplier;
-	private static int nextId = 1;
+	public Item(long size, String name) {
+		this.name = name;
+		this.size = size;
+		this.id = 0;
+		this.idInt = 0;
+		this.date = "";
+		this.setId();
+		this.setDate();
+
+	}
+
+	public Item(String name) {
+		this.name = name;
+		this.id = 0;
+		this.idInt = 0;
+		this.date = "";
+		this.setId();
+		this.setDate();
+
+	}
+
+	public Item() {
+		this.id = 0;
+		this.idInt = 0;
+		this.date = "";
+		this.name = "";
+		this.setId();
+		this.setDate();
+	}
+
+	public Item(Engine engine, Body body, Accessory accessory) {
+		this.engine = engine;
+		this.body = body;
+		this.accessory = accessory;
+		this.name = "car";
+		this.id = 0;
+		this.idInt = 0;
+		this.date = "";
+		this.setId();
+		this.setDate();
+
+	}
+
+	public Engine getEngine() {
+		return engine;
+	}
+
+	public void setEngine(Engine engine) {
+		this.engine = engine;
+	}
+
+	public Body getBody() {
+		return body;
+	}
+
+	public void setBody(Body body) {
+		this.body = body;
+	}
+
+	public Accessory getAccessory() {
+		return accessory;
+	}
+
+	public void setAccessory(Accessory accessory) {
+		this.accessory = accessory;
+	}
+
+	// public Item(String date, int size, int freeValue) {
+	// this.name = date;
+	// this.size = size;
+	// this.freeValue = freeValue;
+	// }
 
 	public int getId() {
 		return id;
@@ -31,23 +110,26 @@ public class Item {
 		nextId++;
 	}
 
-	private void setDate(Item item) {
+	private void setDate() {
 		GregorianCalendar s = new GregorianCalendar();
 		int year = s.get(Calendar.YEAR);
-		String idName = item.getClass().getSimpleName();
-		if (key.get(idName) == null) {
-			key.put(idName, 1);
+
+		if (key == null || key.get(this.getClass().getSimpleName() + " " + name + "-" + year + "-" + "/") == null
+				|| key.isEmpty()) {
+			key.put(this.getClass().getSimpleName() + " " + name + "-" + year + "-" + "/", 1);
 			idInt = 1;
-			String idStr = idName + "-" + year + "-" + "/" + String.valueOf(idInt);
+			String idStr = this.getClass().getSimpleName() + " " + name + "-" + year + "-" + "/"
+					+ String.valueOf(idInt);
 			date = idStr;
 		} else {
-			nextDate = key.get(idName) + 1;
+			nextDate = key.get(this.getClass().getSimpleName() + " " + name + "-" + year + "-" + "/") + 1;
 			idInt = nextDate;
-			key.put(idName, nextDate);
-			String idStr = idName + "-" + year + "-" + "/" + String.valueOf(idInt);
+			key.put(this.getClass().getSimpleName() + " " + name + "-" + year + "-" + "/", nextDate);
+			String idStr = this.getClass().getSimpleName() + " " + name + "-" + year + "-" + "/"
+					+ String.valueOf(idInt);
 			date = idStr;
 		}
-
+		System.out.println(date);
 	}
 
 	public void setName(String name) {
@@ -70,8 +152,20 @@ public class Item {
 		this.supplier = supplier;
 	}
 
-	public static Map<String, Integer> key = new HashMap<>();
-	public static final String BODY = "Body";
-	public static final String ENGINE = "Engine";
-	public static final String ACCESSORY = "Accessory";
+	public void setSize(long size) {
+		this.size = size;
+	}
+
+	public long getSize() {
+		return size;
+	}
+
+	// public void setFreeValue(int freeValue) {
+	// this.freeValue = freeValue;
+	// }
+	//
+	// public int getFreeValue() {
+	// return freeValue;
+	// }
+
 }
