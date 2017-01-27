@@ -17,43 +17,43 @@ public class Item {
 	private static Map<String, Integer> key = new HashMap<>();
 
 	public Item(Supplier supplier) {
-		this.id = 0;
-		this.idInt = 0;
-		this.date = "";
-		this.setName(supplier.getName());
-		this.setId();
-		this.setDate();
+		id = 0;
+		idInt = 0;
+		date = "";
+		setName(supplier.getName());
+		setId();
+		setDate();
 
 	}
 
 	public Item(long size, String name) {
 		this.name = name;
 		this.size = size;
-		this.id = 0;
-		this.idInt = 0;
-		this.date = "";
-		this.setId();
-		this.setDate();
+		id = 0;
+		idInt = 0;
+		date = "";
+		setId();
+		setDate();
 
 	}
 
 	public Item(String name) {
 		this.name = name;
-		this.id = 0;
-		this.idInt = 0;
-		this.date = "";
-		this.setId();
-		this.setDate();
+		id = 0;
+		idInt = 0;
+		date = "";
+		setId();
+		setDate();
 
 	}
 
 	public Item() {
-		this.name = "";
-		this.id = 0;
-		this.idInt = 0;
-		this.date = "";
-		this.setId();
-		this.setDate();
+		name = "";
+		id = 0;
+		idInt = 0;
+		date = "";
+		setId();
+		setDate();
 
 	}
 
@@ -61,12 +61,11 @@ public class Item {
 		this.engine = engine;
 		this.body = body;
 		this.accessory = accessory;
-		this.name = Factory.getNameAuto();
-		this.id = 0;
-		this.idInt = 0;
-		this.date = "";
-		this.setId();
-		this.setDate();
+		name = Factory.getNameAuto();
+		id = 0;
+		idInt = 0;
+		setId();
+		setDate();
 
 	}
 
@@ -93,12 +92,6 @@ public class Item {
 	public void setAccessory(Accessory accessory) {
 		this.accessory = accessory;
 	}
-
-	// public Item(String date, int size, int freeValue) {
-	// this.name = date;
-	// this.size = size;
-	// this.freeValue = freeValue;
-	// }
 
 	public int getId() {
 		return id;

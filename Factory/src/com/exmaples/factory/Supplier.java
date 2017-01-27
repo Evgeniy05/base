@@ -8,7 +8,7 @@ public class Supplier extends Item {
 		date = super.getDate();
 		setStorage(name);
 		flag = true;
-		speed = 1000;
+		speed = 10;
 	}
 
 	public long getSpeed() {

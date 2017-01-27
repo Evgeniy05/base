@@ -75,23 +75,45 @@ public class Storage extends Item {
 		return items.values();
 	}
 
+	public Item getItem() {
+		Iterator<Entry<String, Item>> it = items.entrySet().iterator();
+		if (it.hasNext()) {
+			item = it.next().getValue();
+		}
+		itemRemove(item);
+		return item;
+	}
+
 	public Item getItem(String name) {
-		for (String key : items.keySet()) {
-			if (items.get(key).getName() == name) {
-				item = items.get(key);
-				itemRemove(item);
+		Iterator<Entry<String, Item>> it = items.entrySet().iterator();
+		while (it.hasNext()) {
+			String names = it.next().getValue().getName();
+			if (names.equals(name)) {
+				item = it.next().getValue();
 			}
 		}
+
+		itemRemove(item);
 		return item;
 	}
 
 	public void itemRemove(Item item) {
 		Iterator<Entry<String, Item>> it = items.entrySet().iterator();
 		while (it.hasNext()) {
-			if (it.next().getValue().getName() == item.getName()) {
+			String id = it.next().getValue().getDate();
+			if (id.equals(item.getDate())) {
 				it.remove();
 			}
 		}
 
 	}
+
+	public void itemRemove() {
+		Iterator<Entry<String, Item>> it = items.entrySet().iterator();
+		if (it.hasNext()) {
+			it.next();
+			it.remove();
+		}
+	}
+
 }
