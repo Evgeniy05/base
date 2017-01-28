@@ -116,10 +116,10 @@ public class Storage extends Item {
 	}
 
 	public void itemRemove() {
-		Iterator<Entry<Integer, Item>> it = items.entrySet().iterator();
+		Iterator it = items.entrySet().iterator();
 		if (it.hasNext()) {
-			it.next();
-			it.remove();
+			Entry item = (Entry) it.next();
+			it.remove(item);
 		}
 	}
 

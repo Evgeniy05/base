@@ -112,7 +112,7 @@ public class Factory {
 				to.putIfAbsent(key, from.get(key));
 			}
 		}
-		System.out.println(item);
+		from.
 	}
 
 	public void createCar() {
