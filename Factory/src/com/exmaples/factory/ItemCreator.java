@@ -2,43 +2,38 @@ package com.exmaples.factory;
 
 import java.util.concurrent.Callable;
 
-public class ItemCreator implements Callable<Supplier> {
-	// private int count = 0;
-	private Supplier supplier;
-	private static final String BODY = "Body";
-	private static final String ENGINE = "Engine";
-	private static final String ACCESSORY = "Accessory";
+public class ItemCreator implements Callable<Items> {
 
-	public ItemCreator(Supplier supplier) {
-		this.supplier = supplier;
+	private long speed;
+
+	public ItemCreator() {
 	}
 
 	@Override
-	public Supplier call() throws InterruptedException {
+	public Items call() throws InterruptedException {
 
-		return create(supplier.getSpeed());
+		return create(speed);
 	}
 
-	public Supplier create(long speed) throws InterruptedException {
-		if (supplier.isFlag()) {
-			switch (supplier.getName()) {
-			case ENGINE:
-				supplier.getStorage().addItem(new Engine());
-				Thread.sleep(speed);
-				break;
-			case BODY:
-				supplier.getStorage().addItem(new Body());
-				Thread.sleep(speed);
-				break;
-			case ACCESSORY:
-				supplier.getStorage().addItem(new Accessory());
-				Thread.sleep(speed);
-				break;
-			}
-
+	public Items create(long speed) throws InterruptedException {
+		int countEngine = 0;
+		int countBody = 0;
+		int countAccessory = 0;
+		int kSuppliersEngine = Integer.parseInt(Property.getConfig().get((Property.ENGINE_SUPPLIERS)));
+		int kSuppliersBody = Integer.parseInt(Property.getConfig().get((Property.BODY_SUPPLIERS)));
+		int kSuppliersAccessory = Integer.parseInt(Property.getConfig().get(Property.ACCESSORY_SUPPLIERS));
+		while (countEngine < kSuppliersEngine) {
+			Factory.items.getEngineStorage().addItem(new Engine());
+			countEngine++;
 		}
-
-		return supplier;
-
+		while (countBody < kSuppliersBody) {
+			Factory.items.getBodyStorage().addItem(new Body());
+		}
+		while (countAccessory < kSuppliersAccessory) {
+			Factory.items.getAccessoryStorage().addItem(new Accessory());
+		}
+		countAccessory++;
+		Thread.sleep(speed);
+		return Factory.items;
 	}
 }

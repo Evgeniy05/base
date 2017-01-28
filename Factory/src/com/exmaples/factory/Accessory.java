@@ -1,39 +1,18 @@
 package com.exmaples.factory;
 
 public class Accessory extends Item {
+	{
+		name = Factory.ACCESSORY + String.valueOf(super.getId());
+
+	}
+
 	public Accessory(Supplier supplier) {
 		super(supplier);
-		name = Factory.getNameAccessory();
-		id = super.getId();
-		date = super.getDate();
 
 	}
 
 	public Accessory() {
-		super();
-		this.id = super.getId();
-		this.date = super.getDate();
-		this.name = Factory.getNameEngine();
-		this.supplier = null;
-	}
 
-	@Override
-	public Supplier getSupplier() {
-		return supplier;
-	}
-
-	public void setSupplier(Supplier supplier) {
-		this.supplier = supplier;
-	}
-
-	@Override
-	public int getId() {
-		return id;
-	}
-
-	@Override
-	public String getDate() {
-		return date;
 	}
 
 	@Override
@@ -49,7 +28,6 @@ public class Accessory extends Item {
 		this.price = price;
 	}
 
-	private int price, id;
-	private String name, date;
-	private Supplier supplier;
+	private int price;
+	private String name;
 }

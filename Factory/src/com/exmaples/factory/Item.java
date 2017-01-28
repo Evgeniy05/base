@@ -1,72 +1,42 @@
 package com.exmaples.factory;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
-
 public class Item {
-	private String name, date;
-	private int id, idInt, nextDate, freeValue;
+	private String name;
+	private String date;
+	private int id;
 	private long size;
 	private Supplier supplier;
 	private static int nextId = 1;
 	private Engine engine;
 	private Body body;
 	private Accessory accessory;
-	private static Map<String, Integer> key = new HashMap<>();
-
-	public Item(Supplier supplier) {
-		id = 0;
-		idInt = 0;
-		date = "";
-		setName(supplier.getName());
-		setId();
-		setDate();
-
-	}
-
-	public Item(long size, String name) {
-		this.name = name;
-		this.size = size;
-		id = 0;
-		idInt = 0;
-		date = "";
-		setId();
-		setDate();
-
-	}
-
-	public Item(String name) {
-		this.name = name;
-		id = 0;
-		idInt = 0;
-		date = "";
-		setId();
-		setDate();
-
+	{
+		id = nextId;
+		nextId++;
 	}
 
 	public Item() {
-		name = "";
-		id = 0;
-		idInt = 0;
-		date = "";
-		setId();
-		setDate();
-
+		this("Item#");
 	}
 
-	public Item(Engine engine, Body body, Accessory accessory) {
-		this.engine = engine;
-		this.body = body;
-		this.accessory = accessory;
-		name = Factory.getNameAuto();
-		id = 0;
-		idInt = 0;
-		setId();
-		setDate();
+	public Item(Supplier aSupplier) {
+		supplier = aSupplier;
+	}
 
+	public Item(long aSize, String aName) {
+		name = aName;
+		size = aSize;
+	}
+
+	public Item(String aName) {
+		name = aName;
+	}
+
+	public Item(Engine aEngine, Body aBody, Accessory aAccessory) {
+		engine = aEngine;
+		body = aBody;
+		accessory = aAccessory;
+		this.name = Factory.AUTO;
 	}
 
 	public Engine getEngine() {
@@ -97,33 +67,6 @@ public class Item {
 		return id;
 	}
 
-	private void setId() {
-		id = nextId;
-		nextId++;
-	}
-
-	private void setDate() {
-		GregorianCalendar s = new GregorianCalendar();
-		int year = s.get(Calendar.YEAR);
-
-		if (key == null || key.get(this.getClass().getSimpleName() + " " + name + "-" + year + "-" + "/") == null
-				|| key.isEmpty()) {
-			key.put(this.getClass().getSimpleName() + " " + name + "-" + year + "-" + "/", 1);
-			idInt = 1;
-			String idStr = this.getClass().getSimpleName() + " " + name + "-" + year + "-" + "/"
-					+ String.valueOf(idInt);
-			date = idStr;
-		} else {
-			nextDate = key.get(this.getClass().getSimpleName() + " " + name + "-" + year + "-" + "/") + 1;
-			idInt = nextDate;
-			key.put(this.getClass().getSimpleName() + " " + name + "-" + year + "-" + "/", nextDate);
-			String idStr = this.getClass().getSimpleName() + " " + name + "-" + year + "-" + "/"
-					+ String.valueOf(idInt);
-			date = idStr;
-		}
-		// System.out.println(date);
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -147,13 +90,5 @@ public class Item {
 	public long getSize() {
 		return size;
 	}
-
-	// public void setFreeValue(int freeValue) {
-	// this.freeValue = freeValue;
-	// }
-	//
-	// public int getFreeValue() {
-	// return freeValue;
-	// }
 
 }

@@ -1,14 +1,20 @@
 package com.exmaples.factory;
 
-public class Supplier extends Item {
-	public Supplier(String name) {
-		super(name);
-		this.name = name;
-		id = super.getId();
-		date = super.getDate();
-		setStorage(name);
+public class Supplier extends Storage {
+
+	public Supplier(String nName) {
+		name = nName;
 		flag = true;
 		speed = 10;
+	}
+
+	public Supplier() {
+		this("Supplier#");
+	}
+
+	@Override
+	public String getName() {
+		return name;
 	}
 
 	public long getSpeed() {
@@ -19,29 +25,6 @@ public class Supplier extends Item {
 		this.speed = speed;
 	}
 
-	@Override
-	public int getId() {
-		return id;
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public String getDate() {
-		return date;
-	}
-
-	private void setStorage(String name) {
-		storage = new Storage(name);
-	}
-
-	public Storage getStorage() {
-		return storage;
-	}
-
 	public boolean isFlag() {
 		return flag;
 	}
@@ -50,10 +33,8 @@ public class Supplier extends Item {
 		this.flag = flag;
 	}
 
-	private String name, date;
-	private int id;
 	private long speed;
-
-	private Storage storage;
 	private boolean flag;
+	private String name;
+
 }
