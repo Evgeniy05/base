@@ -1,9 +1,15 @@
 package com.exmaples.factory;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class Factory {
 	public Factory() {
@@ -13,10 +19,10 @@ public class Factory {
 		getStorage();
 		loadWorkers();
 		loadDealers();
-		createEngine();
-		createBody();
-		createAccessory();
-		// getOrderSize();
+		getItemSuppliersEngine();
+		System.out.println(getListSupplierEngine().iterator().next().getStorage());
+		getItemSuppliersBody();
+		getItemSuppliersAccessory();
 		getEngineToStorage();
 		getBodyToStorage();
 		getAccessoryToStorage();
@@ -25,6 +31,7 @@ public class Factory {
 		getCarToStorage();
 		orderDealer();
 		sail();
+		getReportDealer();
 	}
 	//
 	// public void getOrderSize() {
@@ -41,40 +48,42 @@ public class Factory {
 
 	public void orderDealer() {
 		for (Dealer dealer : listDealer) {
-			transferItem(getStorage().get(AUTO), dealer.getStorage());
+			transferItem(getStorage().get(AUTO).getStorage(), dealer.getStorage().getStorage(), AUTO);
 		}
 	}
 
 	public void getCarToStorage() {
 		for (Auto car : listCar) {
-			transferItem(car.getStorage(), getStorage().get(AUTO));
+			transferItem(car.getStorage().getStorage(), getStorage().get(AUTO).getStorage(), AUTO);
 		}
 	}
 
 	public void getEngineToStorage() {
-		for (Supplier supplier : getListSupplier(ENGINE)) {
-			transferItem(supplier.getStorage(), getStorage().get(ENGINE));
+		for (Supplier supplier : getListSupplierEngine()) {
+			transferItem(supplier.getStorage(), getStorage().get(ENGINE).getStorage(), ENGINE);
+			System.out.println(getStorage().get(ENGINE).getStorage().values());
 		}
 	}
 
 	public void getBodyToStorage() {
-		for (Supplier supplier : getListSupplier(BODY)) {
-			transferItem(supplier.getStorage(), getStorage().get(BODY));
+		for (Supplier supplier : getListSupplierBody()) {
+			transferItem(supplier.getStorage(), getStorage().get(BODY).getStorage(), BODY);
+			// System.out.println(getStorage().get(BODY).getStorage().values());
 		}
 	}
 
 	public void getAccessoryToStorage() {
-		for (Supplier supplier : getListSupplier(ACCESSORY)) {
-			transferItem(supplier.getStorage(), getStorage().get(ACCESSORY));
+		for (Supplier supplier : getListSupplierAccessory()) {
+			transferItem(supplier.getStorage(), getStorage().get(ACCESSORY).getStorage(), ACCESSORY);
 		}
 
 	}
 
 	public void getItemWorkers() {
 		for (Worker worker : listWorker) {
-			transferItem(getStorage().get(ENGINE), worker.getStorage());
-			transferItem(getStorage().get(BODY), worker.getStorage());
-			transferItem(getStorage().get(ACCESSORY), worker.getStorage());
+			transferItem(getStorage().get(ENGINE).getStorage(), worker.getStorage(), ENGINE);
+			transferItem(getStorage().get(BODY).getStorage(), worker.getStorage(), BODY);
+			transferItem(getStorage().get(ACCESSORY).getStorage(), worker.getStorage(), ACCESSORY);
 		}
 	}
 
@@ -82,38 +91,24 @@ public class Factory {
 		to.addItem(item);
 	}
 
-	public static void transferItem(Storage from, Storage to, Item item) {
-		from.itemRemove(item);
-		to.addItem(item);
-	}
+	public void transferItem(ConcurrentHashMap<Integer, Item> from, ConcurrentHashMap<Integer, Item> to, String name) {
+		Iterator<Entry<Integer, Item>> it = from.entrySet().iterator();
+		if (it.hasNext()) {
+			if (it.next().getValue().getName().equals(name)) {
 
-	public static void transferItem(Storage from, Storage to) {
-		to.addItem(from.getItem());
-		from.itemRemove();
+				it.next();
+				to.putIfAbsent(it.next().getValue().getId(), it.next().getValue());
+				it.remove();
+			}
+		}
+
 	}
 
 	public void createCar() {
 		for (Worker worker : listWorker) {
-			listCar.add(new Auto((Engine) worker.getStorage().getItem(ENGINE), (Body) worker.getStorage().getItem(BODY),
-					(Accessory) worker.getStorage().getItem(ACCESSORY)));
+			listCar.add(new Auto((Engine) worker.getItem(ENGINE), (Body) worker.getItem(BODY),
+					(Accessory) worker.getItem(ACCESSORY)));
 		}
-	}
-
-	public void createEngine() {
-		for (Supplier supplier : getListSupplier(ENGINE)) {
-			AddItem(supplier.getStorage(), new Engine(supplier));
-		}
-
-	}
-
-	public void createBody() {
-		for (Supplier supplier : getListSupplier(BODY))
-			AddItem(supplier.getStorage(), new Body(supplier));
-	}
-
-	public void createAccessory() {
-		for (Supplier supplier : getListSupplier(ACCESSORY))
-			AddItem(supplier.getStorage(), new Accessory(supplier));
 	}
 
 	public static ConcurrentHashMap<String, Storage> loadStorages() {
@@ -138,6 +133,7 @@ public class Factory {
 		int k = Integer.parseInt(Property.getConfig().get((Property.ENGINE_SUPPLIERS)));
 		for (int i = 0; i < k; i++) {
 			listSupplierEngine.add(new Supplier(ENGINE));
+			// System.out.println(getListSupplier(ENGINE).iterator().next().getId());
 		}
 	}
 
@@ -157,6 +153,15 @@ public class Factory {
 
 	}
 
+	public int getReportDealer() {
+		int k = 0;
+		for (Dealer dealer : listDealer) {
+			k += dealer.getResultSails();
+		}
+		System.out.println(k);
+		return k;
+	}
+
 	public void loadDealers() {
 		int k = Integer.parseInt(Property.getConfig().get((Property.DEALERS)));
 		for (int i = 0; i < k; i++) {
@@ -172,44 +177,102 @@ public class Factory {
 
 	}
 
-	public List<Supplier> getListSupplier(String name) {
-		switch (name) {
-		case ENGINE:
-			listSuppliers = listSupplierEngine;
+	public List<Supplier> getListSupplierEngine() {
+		return listSupplierEngine;
+	}
 
-			break;
-		case BODY:
-			listSuppliers = listSupplierBody;
-			break;
-		case ACCESSORY:
-			listSuppliers = listSupplierAccessory;
-			break;
+	public List<Supplier> getListSupplierBody() {
+		return listSupplierBody;
+	}
+
+	public List<Supplier> getListSupplierAccessory() {
+
+		return listSupplierAccessory;
+	}
+
+	public synchronized void AddItems() {
+		for (Item key : items.keySet()) {
+			if (items.get(key) == ENGINE) {
+
+			}
 		}
-		return listSuppliers;
+		for (Item key : items.keySet()) {
+			if (items.get(key) == BODY) {
+				item = key;
+			}
+		}
+		for (Item key : items.keySet()) {
+			if (items.get(key) == ACCESSORY) {
+				item = key;
+			}
+		}
 	}
 
-	public static String getNameAccessory() {
-		return ACCESSORY;
+	public ConcurrentHashMap<Item, String> getItems() {
+		return items;
 	}
 
-	public static String getNameEngine() {
-		return ENGINE;
+	private void getItemSuppliersEngine() {
+		for (Supplier supplierEngine : getListSupplierEngine()) {
+			supplierEngine.addItem(createEngine());
+		}
 	}
 
-	public static String getNameBody() {
-		return BODY;
+	private void getItemSuppliersBody() {
+		for (Supplier supplierBody : getListSupplierBody()) {
+			supplierBody.addItem(createBody());
+		}
 	}
 
-	public static String getNameAuto() {
-		return AUTO;
+	private void getItemSuppliersAccessory() {
+		for (Supplier supplierAccessory : getListSupplierAccessory()) {
+			supplierAccessory.addItem(createAccessory());
+		}
 	}
 
-	public static String getNameDealer() {
-		return DEALER;
+	private Item createEngine() {
+		ExecutorService threadEngine = Executors.newSingleThreadExecutor();
+		Future<Item> resultEngine = threadEngine.submit(new ItemCreator(ENGINE));
+		try {
+			engine = (Engine) resultEngine.get();
+		} catch (InterruptedException e) {
+
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+
+			e.printStackTrace();
+		}
+		return engine;
 	}
 
-	public static String getNameWorker() {
-		return WORKER;
+	private Item createBody() {
+		ExecutorService threadBody = Executors.newSingleThreadExecutor();
+		Future<Item> resultBody = threadBody.submit(new ItemCreator(BODY));
+		try {
+			body = (Body) resultBody.get();
+		} catch (InterruptedException e) {
+
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+
+			e.printStackTrace();
+		}
+		return body;
+	}
+
+	private Item createAccessory() {
+		ExecutorService threadAccessory = Executors.newSingleThreadExecutor();
+		Future<Item> resultAccessory = threadAccessory.submit(new ItemCreator(Factory.ACCESSORY));
+		try {
+			accessory = (Accessory) resultAccessory.get();
+		} catch (InterruptedException e) {
+
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+
+			e.printStackTrace();
+		}
+		return accessory;
 	}
 
 	List<Integer> size = new ArrayList<>();
@@ -220,12 +283,19 @@ public class Factory {
 	List<Supplier> listSupplierAccessory = new ArrayList<Supplier>();
 	List<Dealer> listDealer = new ArrayList<Dealer>();
 	List<Worker> listWorker = new ArrayList<Worker>();
-	private static final String BODY = "Body";
-	private static final String ENGINE = "Engine";
-	private static final String ACCESSORY = "Accessory";
-	private static final String AUTO = "Auto";
-	private static final String DEALER = "Dealer";
-	private static final String WORKER = "Worker";
-	private static ConcurrentHashMap<String, Storage> storages = new ConcurrentHashMap<>();
-
+	public ConcurrentHashMap<Item, String> items = new ConcurrentHashMap<>();
+	private Item item;
+	private Engine engine;
+	private Body body;
+	private Accessory accessory;
+	public static final String BODY = "Body";
+	public static final String ENGINE = "Engine";
+	public static final String ACCESSORY = "Accessory";
+	public static final String AUTO = "Auto";
+	public static final String DEALER = "Dealer";
+	public static final String WORKER = "Worker";
+	public static ConcurrentHashMap<String, Storage> storages = new ConcurrentHashMap<>();
+	private final int kSuppliersEngine = Integer.parseInt(Property.getConfig().get((Property.ENGINE_SUPPLIERS)));
+	private final int kSuppliersBody = Integer.parseInt(Property.getConfig().get((Property.BODY_SUPPLIERS)));
+	private final int kSuppliersAccessory = Integer.parseInt(Property.getConfig().get(Property.ACCESSORY_SUPPLIERS));
 }

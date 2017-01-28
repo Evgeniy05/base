@@ -123,8 +123,4 @@ public class Storage extends Item {
 		}
 	}
 
-	public void transferItem(Storage from, Storage to, String name) {
-		from.itemRemove(from.getItem(name));
-		to.addItem(from.getItem(name));
-	}
 }

@@ -2,38 +2,79 @@ package com.exmaples.factory;
 
 import java.util.concurrent.Callable;
 
-public class ItemCreator implements Callable<Items> {
+public class ItemCreator implements Callable<Item> {
 
-	private long speed;
+	// private long speed;
+	private String name;
+	private Item item;
 
-	public ItemCreator() {
+	public ItemCreator(String nName) {
+		name = nName;
 	}
 
 	@Override
-	public Items call() throws InterruptedException {
+	public Item call() throws InterruptedException {
 
-		return create(speed);
+		return create(name);
 	}
 
-	public Items create(long speed) throws InterruptedException {
-		int countEngine = 0;
-		int countBody = 0;
-		int countAccessory = 0;
-		int kSuppliersEngine = Integer.parseInt(Property.getConfig().get((Property.ENGINE_SUPPLIERS)));
-		int kSuppliersBody = Integer.parseInt(Property.getConfig().get((Property.BODY_SUPPLIERS)));
-		int kSuppliersAccessory = Integer.parseInt(Property.getConfig().get(Property.ACCESSORY_SUPPLIERS));
-		while (countEngine < kSuppliersEngine) {
-			Factory.items.getEngineStorage().addItem(new Engine());
-			countEngine++;
+	public Item create(String aName) throws InterruptedException {
+		switch (aName) {
+		case Factory.ENGINE:
+			item = new Engine();
+			break;
+		case Factory.BODY:
+			item = new Body();
+			break;
+		case Factory.ACCESSORY:
+			item = new Accessory();
+			break;
 		}
-		while (countBody < kSuppliersBody) {
-			Factory.items.getBodyStorage().addItem(new Body());
-		}
-		while (countAccessory < kSuppliersAccessory) {
-			Factory.items.getAccessoryStorage().addItem(new Accessory());
-		}
-		countAccessory++;
-		Thread.sleep(speed);
-		return Factory.items;
+		// Thread.sleep(speed);
+		return item;
 	}
 }
+
+// public class ItemCreator implements Callable<ConcurrentHashMap<String, Item>>
+// {
+//
+// private long speed;
+// private ConcurrentHashMap<String, Item> items;
+//
+// public ItemCreator(long aSpeed, ConcurrentHashMap<String, Item> aItems) {
+// speed = aSpeed;
+// items = aItems;
+// }
+//
+// @Override
+// public ConcurrentHashMap<String, Item> call() throws InterruptedException {
+//
+// return create(speed);
+// }
+//
+// public ConcurrentHashMap<String, Item> create(long speed) throws
+// InterruptedException {
+// int countEngine = 0;
+// int countBody = 0;
+// int countAccessory = 0;
+// int kSuppliersEngine =
+// Integer.parseInt(Property.getConfig().get((Property.ENGINE_SUPPLIERS)));
+// int kSuppliersBody =
+// Integer.parseInt(Property.getConfig().get((Property.BODY_SUPPLIERS)));
+// int kSuppliersAccessory =
+// Integer.parseInt(Property.getConfig().get(Property.ACCESSORY_SUPPLIERS));
+// while (countEngine < kSuppliersEngine) {
+// items.putIfAbsent(Factory.ENGINE, (new Engine()));
+// countEngine++;
+// }
+// while (countBody < kSuppliersBody) {
+// items.putIfAbsent(Factory.BODY, (new Body()));
+// }
+// while (countAccessory < kSuppliersAccessory) {
+// items.putIfAbsent(Factory.ACCESSORY, (new Accessory()));
+// }
+// countAccessory++;
+// Thread.sleep(speed);
+// return items;
+// }
+// }
