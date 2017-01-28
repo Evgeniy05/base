@@ -2,7 +2,7 @@ package com.exmaples.factory;
 
 public class Body extends Item {
 	{
-		name = Factory.BODY + String.valueOf(super.getId());
+		name = Factory.BODY;
 	}
 
 	public Body(Supplier supplier) {

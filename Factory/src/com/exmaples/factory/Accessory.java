@@ -2,7 +2,7 @@ package com.exmaples.factory;
 
 public class Accessory extends Item {
 	{
-		name = Factory.ACCESSORY + String.valueOf(super.getId());
+		name = Factory.ACCESSORY;
 
 	}
 

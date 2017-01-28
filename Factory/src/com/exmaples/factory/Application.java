@@ -4,7 +4,8 @@ import java.util.concurrent.ExecutionException;
 
 public class Application {
 
-	public static void main(String[] args) throws InterruptedException, ExecutionException {
+	public static void main(String[] args) throws InterruptedException, ExecutionException, InstantiationException,
+			IllegalAccessException, ClassNotFoundException {
 
 		Factory factory = new Factory();
 

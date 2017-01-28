@@ -3,7 +3,7 @@ package com.exmaples.factory;
 public class Engine extends Item {
 
 	{
-		name = Factory.ENGINE + String.valueOf(super.getId());
+		name = Factory.ENGINE;
 	}
 
 	public Engine(Supplier supplier) {

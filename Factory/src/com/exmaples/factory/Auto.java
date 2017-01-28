@@ -2,7 +2,7 @@ package com.exmaples.factory;
 
 public class Auto extends Item {
 	{
-		name = super.getName() + String.valueOf(super.getId());
+		name = super.getName();
 	}
 
 	public Auto() {
