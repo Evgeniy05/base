@@ -1,33 +1,30 @@
 package com.exmaples.factory;
 
-public class Auto extends Item {
-	{
-		name = super.getName();
-	}
+import java.util.ArrayList;
+import java.util.List;
 
-	public Auto() {
+public class Auto extends Item {
+	public static final String AUTO = "Auto";
+	{
+		name = AUTO + "Car";
 
 	}
 
 	public Auto(Engine engine, Body body, Accessory accessory) {
-		super(engine, body, accessory);
-		setStorage(name);
+		description.add(engine);
+		description.add(body);
+		description.add(accessory);
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}
 
-	private void setStorage(String name) {
-		storage = new Storage(name);
-
-	}
-
-	public Storage getStorage() {
-		return storage;
+	public List<Item> getDescription() {
+		return description;
 	}
 
 	private String name;
-	private Storage storage;
+	private List<Item> description = new ArrayList<>();
+
 }
