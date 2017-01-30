@@ -8,8 +8,8 @@ public class ItemCreator implements Callable<Item> {
 	private String name;
 	private Item item;
 
-	public ItemCreator(String nName) {
-		name = nName;
+	public ItemCreator(String name) {
+		this.name = name;
 	}
 
 	@Override
@@ -20,13 +20,13 @@ public class ItemCreator implements Callable<Item> {
 
 	public Item create(String aName) throws InterruptedException {
 		switch (aName) {
-		case Factory.ENGINE:
+		case Item.ENGINE:
 			item = new Engine();
 			break;
-		case Factory.BODY:
+		case Item.BODY:
 			item = new Body();
 			break;
-		case Factory.ACCESSORY:
+		case Item.ACCESSORY:
 			item = new Accessory();
 			break;
 		}
