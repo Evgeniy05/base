@@ -2,12 +2,7 @@ package com.exmaples.factory;
 
 public class Accessory extends Item {
 	{
-		name = Factory.ACCESSORY;
-
-	}
-
-	public Accessory(Supplier supplier) {
-		super(supplier);
+		name = super.ACCESSORY;
 
 	}
 
@@ -15,7 +10,6 @@ public class Accessory extends Item {
 
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}
