@@ -22,7 +22,7 @@ public class Property {
 			listConfig.put(ENGINE_SUPPLIERS, config.getProperty(ENGINE_SUPPLIERS));
 			listConfig.put(BODY_SUPPLIERS, config.getProperty(BODY_SUPPLIERS));
 			listConfig.put(WORKERS, config.getProperty(WORKERS));
-			listConfig.put(DEALERS, config.getProperty(DEALERS));
+			listConfig.put(MENEDGERS, config.getProperty(MENEDGERS));
 			listConfig.put(LOGSALE, config.getProperty(LOGSALE));
 		} catch (IOException e) {
 			System.out.println("Error: file " + "not found");
@@ -38,7 +38,7 @@ public class Property {
 		return listConfig;
 	}
 
-	private static Map<String, String> listConfig = null;
+	public static Map<String, String> listConfig = null;
 	private static final String filename = "config.properties";
 	public static final String STORAGE_ACCESSORY_SIZE = "StorageAccessorySize";
 	public static final String STORAGE_ENGINE_SIZE = "StorageEngineSize";
@@ -48,6 +48,6 @@ public class Property {
 	public static final String ENGINE_SUPPLIERS = "EngineSuppliers";
 	public static final String BODY_SUPPLIERS = "BodySuppliers";
 	public static final String WORKERS = "Workers";
-	public static final String DEALERS = "Dealers";
+	public static final String MENEDGERS = "Menedgers";
 	public static final String LOGSALE = "LogSale";
 }
