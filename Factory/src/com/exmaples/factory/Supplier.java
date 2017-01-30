@@ -1,6 +1,18 @@
 package com.exmaples.factory;
 
-public class Supplier extends Storage {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Supplier {
+	private Item item;
+	private long speed;
+	private boolean flag;
+	private String name;
+	private List<Integer> items;
+
+	{
+		items = new ArrayList<Integer>();
+	}
 
 	public Supplier(String nName) {
 		name = nName;
@@ -12,7 +24,15 @@ public class Supplier extends Storage {
 		this("Supplier#");
 	}
 
-	@Override
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+		items.add(item.getId());
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -32,9 +52,5 @@ public class Supplier extends Storage {
 	public void setFlag(boolean flag) {
 		this.flag = flag;
 	}
-
-	private long speed;
-	private boolean flag;
-	private String name;
 
 }

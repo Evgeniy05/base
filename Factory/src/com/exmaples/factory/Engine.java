@@ -3,18 +3,13 @@ package com.exmaples.factory;
 public class Engine extends Item {
 
 	{
-		name = Factory.ENGINE;
-	}
-
-	public Engine(Supplier supplier) {
-		super(supplier);
+		name = super.ENGINE;
 	}
 
 	public Engine() {
 		super();
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}

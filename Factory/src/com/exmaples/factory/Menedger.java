@@ -1,44 +1,47 @@
 package com.exmaples.factory;
 
-import java.util.Iterator;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
-public class Dealer extends Auto {
+public class Menedger {
+	private List<Integer> carList;
+
 	{
-		name = Factory.DEALER + String.valueOf(super.getId());
+		name = Property.MENEDGERS;
+		carList = new ArrayList<>();
 	}
 
-	public Dealer() {
+	public Menedger() {
 		super();
 
 	}
 
-	@Override
+	public List<Integer> getCarList() {
+		return carList;
+	}
+
+	public Integer getOrderCar() {
+		return orderCar;
+	}
+
+	public void setOrderCar() {
+		Random generator = new Random();
+		this.orderCar = generator.nextInt(3);
+	}
+
 	public String getName() {
 		return name;
 	}
 
-	public long getValueCar() {
-		return storage.getValue();
-	}
-
-	public void sail() {
-
-		Iterator<Entry<Integer, Item>> it = super.getStorage().getStorage().entrySet().iterator();
-		while (it.hasNext()) {
-			if (it.next() != null) {
-				it.remove();
-				result++;
-			}
-		}
+	public void Sail(Auto car) {
+		getCarList().add(car.getId());
 	}
 
 	public int getResultSails() {
-		return result;
+		return getCarList().size();
 	}
 
-	private int result;
 	private String name;
-	private Storage storage;
-
+	private int orderCar;
 }
