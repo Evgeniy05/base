@@ -2,17 +2,7 @@ package com.exmaples.factory;
 
 public class Engine extends Item {
 
-	{
-		name = super.ENGINE;
+	public Engine(String name, Integer id) {
+		super(name, id);
 	}
-
-	public Engine() {
-		super();
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	private String name;
 }

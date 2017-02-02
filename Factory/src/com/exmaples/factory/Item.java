@@ -1,20 +1,24 @@
 package com.exmaples.factory;
 
-public class Item {
+public abstract class Item {
 	private int id;
-	private static int nextId = 1;
+	private String name;
 
-	{
-		id = nextId;
-		nextId++;
+	public Item(String name, Integer id) {
+		this.name = name;
+		this.id = id;
+	}
+
+	public Item() {
+
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public int getId() {
 		return id;
 	}
-
-	public static final String BODY = "Body";
-	public static final String ENGINE = "Engine";
-	public static final String ACCESSORY = "Accessory";
 
 }

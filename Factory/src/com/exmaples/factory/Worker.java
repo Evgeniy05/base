@@ -4,6 +4,7 @@ public class Worker {
 	private Engine engine;
 	private Body body;
 	private Accessory accessory;
+
 	{
 		name = Factory.WORKER;
 	}

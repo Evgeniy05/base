@@ -47,6 +47,9 @@ public class Property {
 	public static final String ACCESSORY_SUPPLIERS = "AccessorySuppliers";
 	public static final String ENGINE_SUPPLIERS = "EngineSuppliers";
 	public static final String BODY_SUPPLIERS = "BodySuppliers";
+	public static final String ENGINE = "Engine";
+	public static final String BODY = "Body";
+	public static final String ACCESSORY = "Accessory";
 	public static final String WORKERS = "Workers";
 	public static final String MENEDGERS = "Menedgers";
 	public static final String LOGSALE = "LogSale";

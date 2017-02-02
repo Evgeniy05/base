@@ -1,17 +1,10 @@
 package com.exmaples.factory;
 
 public class Accessory extends Item {
-	{
-		name = super.ACCESSORY;
+	private int price;
 
-	}
-
-	public Accessory() {
-
-	}
-
-	public String getName() {
-		return name;
+	public Accessory(String name, Integer id) {
+		super(name, id);
 	}
 
 	public int getPrice() {
@@ -22,6 +15,4 @@ public class Accessory extends Item {
 		this.price = price;
 	}
 
-	private int price;
-	private String name;
 }

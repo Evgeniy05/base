@@ -1,30 +1,41 @@
 package com.exmaples.factory;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Auto extends Item {
+	private String name;
+	private Engine engine;
+	private Body body;
+	private Accessory accessory;
+	private int id;
 	public static final String AUTO = "Auto";
-	{
-		name = AUTO + "Car";
-
-	}
 
 	public Auto(Engine engine, Body body, Accessory accessory) {
-		description.add(engine);
-		description.add(body);
-		description.add(accessory);
+		this.name = AUTO + "Car";
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
 
-	public List<Item> getDescription() {
-		return description;
+	@Override
+	public int getId() {
+		return id;
 	}
 
-	private String name;
-	private List<Item> description = new ArrayList<>();
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Engine getEngine() {
+		return engine;
+	}
+
+	public Body getBody() {
+		return body;
+	}
+
+	public Accessory getAccessory() {
+		return accessory;
+	}
 
 }

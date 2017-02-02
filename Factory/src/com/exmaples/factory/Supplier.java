@@ -1,40 +1,14 @@
 package com.exmaples.factory;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Supplier {
-	private Item item;
-	private long speed;
-	private boolean flag;
+public class Supplier<T extends Item> {
 	private String name;
-	private List<Integer> items;
+	private ItemCreator<T> creator;
+	private long speed;
 
-	{
-		items = new ArrayList<Integer>();
-	}
-
-	public Supplier(String nName) {
-		name = nName;
-		flag = true;
-		speed = 10;
-	}
-
-	public Supplier() {
-		this("Supplier#");
-	}
-
-	public Item getItem() {
-		return item;
-	}
-
-	public void setItem(Item item) {
-		this.item = item;
-		items.add(item.getId());
-	}
-
-	public String getName() {
-		return name;
+	public Supplier(String name, ItemCreator<T> creator) {
+		this.name = name;
+		this.creator = creator;
+		this.speed = 100;
 	}
 
 	public long getSpeed() {
@@ -45,12 +19,18 @@ public class Supplier {
 		this.speed = speed;
 	}
 
-	public boolean isFlag() {
-		return flag;
+	public Supplier(String name) {
+		this.name = name;
+
 	}
 
-	public void setFlag(boolean flag) {
-		this.flag = flag;
+	public String getName() {
+		return name;
+	}
+
+	public T createNewItem() {
+		T item = creator.create();
+		return item;
 	}
 
 }

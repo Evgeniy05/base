@@ -1,86 +1,66 @@
 package com.exmaples.factory;
 
-import java.util.Iterator;
-import java.util.Map.Entry;
+import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Storage {
-	private ConcurrentHashMap<Integer, Item> items;
-	private Item item;
-	private int size;
+public class Storage<T extends Item> {
+	private ConcurrentHashMap<Integer, T> items = new ConcurrentHashMap<>();
+	private Integer size;
 	private String name;
 
-	{
-		items = new ConcurrentHashMap<>();
-	}
-
-	public Storage(int size, String name) {
+	public Storage(Integer size, String name) {
 		this.size = size;
 		this.name = name;
 
 	}
 
-	public Storage(String name) {
-		this.name = name;
+	public Collection<T> getItemList() {
+		return items.values();
 	}
 
-	public Storage() {
-		this("Storage#");
+	public Storage(Integer size) {
+		this.size = size;
 	}
 
-	public ConcurrentHashMap<Integer, Item> getStorage() {
-		return items;
+	public synchronized void addItem(T item) throws InterruptedException {
+		if (getValue() >= size) {
+			wait();
+		}
+		items.put(item.getId(), item);
+		notifyAll();
 	}
 
-	public int getSize() {
-		return size;
+	public Integer getSize() {
+		return this.size;
+	}
+
+	public Integer getFreeSpace() {
+		return this.size - getValue();
+	}
+
+	public void removeItemById(Integer id) {
+		this.items.remove(id);
+	}
+
+	public synchronized T getItem() throws InterruptedException {
+		T item = null;
+		if (items.size() == 0) {
+			wait();
+		}
+		Integer id = items.keys().nextElement();
+		item = items.get(id);
+		items.remove(id);
+		notifyAll();
+
+		return item;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public long getValue() {
-		return items.mappingCount();
+	public Integer getValue() {
+		return (int) items.mappingCount();
 	}
 
-	public long getFreeValue() {
-		return getSize() - getValue();
-	}
-
-	public synchronized void addItem(Item item) throws InterruptedException {
-		while (getFreeValue() == 0) {
-			wait();
-		}
-		items.putIfAbsent(item.getId(), item);
-		notifyAll();
-	}
-
-	public void itemRemove(Item item) {
-		Iterator<Entry<Integer, Item>> it = items.entrySet().iterator();
-		while (it.hasNext()) {
-			int id = it.next().getValue().getId();
-			if (id == item.getId()) {
-				it.remove();
-			}
-		}
-
-	}
-
-	public synchronized Item getItem(String type) throws InterruptedException {
-		while (getValue() == 0) {
-			wait();
-		}
-		for (int key : items.keySet()) {
-			if (items.get(key).getClass().getSimpleName().equals(type)) {
-				item = items.get(key);
-
-				break;
-			}
-		}
-		itemRemove(item);
-		notifyAll();
-		return item;
-
-	}
 }
