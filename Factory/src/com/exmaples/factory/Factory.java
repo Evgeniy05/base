@@ -1,24 +1,20 @@
 package com.exmaples.factory;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Factory {
-	private int workers = Integer.parseInt(Property.getConfig().get((Property.WORKERS)));
-	List<Worker> listWorker = new ArrayList<Worker>();
+
+	public HeadWorker headWorker = new HeadWorker();
 	public ConcurrentHashMap<Item, String> items = new ConcurrentHashMap<>();
-	private Storage<Accessory> accessory;
-	private Storage<Body> body;
-	private Storage<Engine> engine;
-	private Storage<Auto> auto;
+	public Storage<Accessory> accessory;
+	public Storage<Body> body;
+	public Storage<Engine> engine;
+	public Storage<Auto> auto;
 	public static final String AUTO = "Auto";
 	public static final String WORKER = "Worker";
 
 	public Factory() {
 		loadStorages();
-		loadWorkers();
-
 	}
 
 	public void loadStorages() {
@@ -45,13 +41,6 @@ public class Factory {
 
 	public Storage<Auto> getStorageAuto() {
 		return auto;
-	}
-
-	public void loadWorkers() {
-		for (int i = 0; i < workers; i++) {
-			listWorker.add(new Worker());
-		}
-
 	}
 
 }

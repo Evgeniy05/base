@@ -1,16 +1,11 @@
+
 package com.exmaples.factory;
 
 public class BodyCreator extends ItemCreator<Body> {
-	private String name;
 
 	public BodyCreator(String name) {
 		super(name);
 
-	}
-
-	@Override
-	public String getName() {
-		return name;
 	}
 
 	@Override

@@ -1,9 +1,7 @@
 package com.exmaples.factory;
 
 public class Worker {
-	private Engine engine;
-	private Body body;
-	private Accessory accessory;
+	private Order order = new Order("", 0);
 
 	{
 		name = Factory.WORKER;
@@ -13,28 +11,12 @@ public class Worker {
 		super();
 	}
 
-	public Engine getEngine() {
-		return engine;
+	public Order getOrder() {
+		return order;
 	}
 
-	public void setEngine(Engine engine) {
-		this.engine = engine;
-	}
-
-	public Body getBody() {
-		return body;
-	}
-
-	public void setBody(Body body) {
-		this.body = body;
-	}
-
-	public Accessory getAccessory() {
-		return accessory;
-	}
-
-	public void setAccessory(Accessory accessory) {
-		this.accessory = accessory;
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
 	public String getName() {
@@ -42,5 +24,10 @@ public class Worker {
 	}
 
 	private String name;
+	private Auto car;
 
+	public Auto createCar(Engine engine, Body body, Accessory accessory) {
+		car = new Auto(engine, body, accessory);
+		return car;
+	}
 }

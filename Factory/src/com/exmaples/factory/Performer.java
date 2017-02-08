@@ -38,18 +38,18 @@ public class Performer<T extends Item> {
 		return workMapOne;
 	}
 
-	public void loadSuppliers(T item, ItemCreator<T> creator) {
-		if (item.getName().equals(engine)) {
+	public void loadSuppliers(ItemCreator<T> creator) {
+		if (creator.getName().equals(engine)) {
 			for (int i = 0; i < suppliersEngine; i++) {
 				listSuppliers.add(new Supplier<T>(engine, creator));
 			}
 		}
-		if (item.getName().equals(body)) {
+		if (creator.getName().equals(body)) {
 			for (int i = 0; i < suppliersBody; i++) {
 				listSuppliers.add(new Supplier<T>(body, creator));
 			}
 		}
-		if (item.getName().equals(accessory)) {
+		if (creator.getName().equals(accessory)) {
 			for (int i = 0; i < suppliersAccessory; i++) {
 				listSuppliers.add(new Supplier<T>(accessory, creator));
 			}
@@ -68,7 +68,7 @@ public class Performer<T extends Item> {
 			int n = order.getQuantaty();
 			qitem = 1;
 			for (int i = 0; i < n; i++) {
-				System.out.println(getListSuppliers().get(i));
+				// System.out.println(getListSuppliers().get(i));
 				workMapOne.put(getListSuppliers().get(i), qitem);
 			}
 		} else {

@@ -1,21 +1,26 @@
 package com.exmaples.factory;
 
 public class Sails implements Runnable {
-	private Storage from;
+	private Storage<Auto> from;
 	private Menedger menedger;
+	private int k;
 
-	public Sails(Storage from, Menedger menedger) {
-
+	public Sails(Storage<Auto> from, Menedger menedger, int k) {
+		this.from = from;
+		this.menedger = menedger;
+		this.k = k;
 	}
 
 	@Override
 	public void run() {
-
-		while (true) {
+		int count = 0;
+		while (count < k) {
 			try {
-				menedger.Sail((Auto) from.getItem(Auto.AUTO));
+				menedger.Sail(from.getItem());
+				Thread.sleep(10);
+				count++;
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}

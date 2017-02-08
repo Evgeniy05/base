@@ -3,7 +3,7 @@ package com.exmaples.factory;
 public abstract class ItemCreator<T extends Item> {
 
 	private String name;
-	private Integer id = 0;
+	private Integer id = 1;
 
 	public ItemCreator(String name) {
 		this.name = name;

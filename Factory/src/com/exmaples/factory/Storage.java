@@ -1,17 +1,26 @@
 package com.exmaples.factory;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Storage<T extends Item> {
+	private int product = 0;
+	private int sail = 0;
 	private ConcurrentHashMap<Integer, T> items = new ConcurrentHashMap<>();
 	private Integer size;
 	private String name;
+	private Map<Integer, Integer> sails = new HashMap<>();
 
 	public Storage(Integer size, String name) {
 		this.size = size;
 		this.name = name;
 
+	}
+
+	public int getResults() {
+		return sail;
 	}
 
 	public Collection<T> getItemList() {
@@ -27,6 +36,8 @@ public class Storage<T extends Item> {
 			wait();
 		}
 		items.put(item.getId(), item);
+		if (item.getName().equals(Auto.AUTO + "Car"))
+			product++;
 		notifyAll();
 	}
 
@@ -44,12 +55,12 @@ public class Storage<T extends Item> {
 
 	public synchronized T getItem() throws InterruptedException {
 		T item = null;
-		if (items.size() == 0) {
+		while (items.size() == 0)
 			wait();
-		}
 		Integer id = items.keys().nextElement();
 		item = items.get(id);
-		items.remove(id);
+		if (item.getName().equals(Auto.AUTO + "Car"))
+			items.remove(id);
 		notifyAll();
 
 		return item;

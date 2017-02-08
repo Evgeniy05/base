@@ -2,14 +2,24 @@ package com.exmaples.factory;
 
 public class Auto extends Item {
 	private String name;
-	private Engine engine;
-	private Body body;
-	private Accessory accessory;
-	private int id;
+	private Engine engine = new Engine("", 0);
+	private Body body = new Body("", 0);
+	private Accessory accessory = new Accessory("", 0);
+	private int id = 0;
+	private static int nextId = 1;
 	public static final String AUTO = "Auto";
+
+	{
+		id = nextId;
+		nextId++;
+	}
 
 	public Auto(Engine engine, Body body, Accessory accessory) {
 		this.name = AUTO + "Car";
+		this.engine = engine;
+		this.body = body;
+		this.accessory = accessory;
+
 	}
 
 	@Override

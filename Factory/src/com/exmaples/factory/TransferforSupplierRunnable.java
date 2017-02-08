@@ -6,10 +6,10 @@ public class TransferforSupplierRunnable<T extends Item> implements Runnable {
 	private Supplier<T> supplier;
 	private Storage<T> to;
 
-	public TransferforSupplierRunnable(Supplier<T> supplier, Storage<T> to, Object k) {
+	public TransferforSupplierRunnable(Supplier<T> supplier, Storage<T> to, int k) {
 		this.supplier = supplier;
 		this.to = to;
-		this.k = (int) k;
+		this.k = k;
 	}
 
 	@Override
