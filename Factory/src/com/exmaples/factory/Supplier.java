@@ -8,7 +8,7 @@ public class Supplier<T extends Item> {
 	public Supplier(String name, ItemCreator<T> creator) {
 		this.name = name;
 		this.creator = creator;
-		this.speed = 10;
+		this.speed = 1000;
 	}
 
 	public long getSpeed() {

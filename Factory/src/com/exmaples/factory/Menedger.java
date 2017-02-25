@@ -2,32 +2,25 @@ package com.exmaples.factory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Menedger {
-	private List<Integer> carList;
+	private String name;
+	private static List<Integer> carList;
+	private int id = 0;
+	private static int nextId = 1;
 
 	{
-		name = Property.MENEDGERS;
+		id = nextId;
+		nextId++;
+		name = Property.MENEDGERS + String.valueOf(id);
 		carList = new ArrayList<>();
 	}
 
 	public Menedger() {
-		super();
-
 	}
 
 	public List<Integer> getCarList() {
 		return carList;
-	}
-
-	public Integer getOrderCar() {
-		return orderCar;
-	}
-
-	public void setOrderCar() {
-		Random generator = new Random();
-		this.orderCar = generator.nextInt(3);
 	}
 
 	public String getName() {
@@ -35,13 +28,13 @@ public class Menedger {
 	}
 
 	public void Sail(Auto car) {
+
 		getCarList().add(car.getId());
+		System.out.println("Sail" + car.getId());
 	}
 
 	public int getResultSails() {
 		return getCarList().size();
 	}
 
-	private String name;
-	private int orderCar;
 }
