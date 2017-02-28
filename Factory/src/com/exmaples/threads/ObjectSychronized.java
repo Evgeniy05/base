@@ -5,26 +5,41 @@ public class ObjectSychronized {
 	// new Accessory("", 1));
 	// private Auto isFullCar = new Auto(new Engine("", 2), new Body("", 2), new
 	// Accessory("", 2));
-	// private Engine isFullEngine = new Engine("", 3);
-	// private Engine isEmptyEngine = new Engine("", 4);
-	// private Body isFullBody = new Body("", 3);
-	// private Body isEmptyBody = new Body("", 4);
-	// private Accessory isFullAccessory = new Accessory("", 3);
-	// private Accessory isEmptyAccessory = new Accessory("", 4);
-	private Object isEmptyItem = new Object();
-	private Object isFullItem = new Object();
+	private Object isFullEngine = new Object();
+	private Object isEmptyEngine = new Object();
+	private Object isFullBody = new Object();
+	private Object isEmptyBody = new Object();
+	private Object isFullAccessory = new Object();
+	private Object isEmptyAccessory = new Object();
+
 	private Object isFullAuto = new Object();
 	private Object isEmptyAuto = new Object();
 
 	public ObjectSychronized() {
 	}
 
-	public Object getIsEmptyItem() {
-		return isEmptyItem;
+	public Object getIsFullEngine() {
+		return isFullEngine;
 	}
 
-	public Object getIsFullItem() {
-		return isFullItem;
+	public Object getIsEmptyEngine() {
+		return isEmptyEngine;
+	}
+
+	public Object getIsFullBody() {
+		return isFullBody;
+	}
+
+	public Object getIsEmptyBody() {
+		return isEmptyBody;
+	}
+
+	public Object getIsFullAccessory() {
+		return isFullAccessory;
+	}
+
+	public Object getIsEmptyAccessory() {
+		return isEmptyAccessory;
 	}
 
 	public Object getIsFullAuto() {

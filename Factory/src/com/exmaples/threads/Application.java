@@ -15,6 +15,7 @@ public class Application {
 
 	public static void main(String args[]) throws InterruptedException {
 		WorkSpace work = new WorkSpace();
+		// System.out.println(work.factory.getStorageAccessory().getName());
 		ObjectSychronized obj = new ObjectSychronized();
 		// Get the ThreadFactory implementation to use
 		ThreadFactory threadFactory = Executors.defaultThreadFactory();
@@ -47,21 +48,20 @@ public class Application {
 				work.factory.getStorageAccessory(), obj, "accessory");
 		WorkerThread worker = new WorkerThread(work, "car", obj);
 		Sails sail = new Sails(work, obj, "sail");
-		for (int j = 0; j < 2; j++) {
+		for (int j = 0; j < work.getSupplierEngine().getListSuppliers().size(); j++) {
 			executorPool.execute(engine);
 		}
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < work.getSupplierBody().getListSuppliers().size(); i++) {
 
 			executorPool.execute(body);
 
 		}
 
-		for (int k = 0; k < 2; k++) {
+		for (int k = 0; k < work.getSupplierAccessory().getListSuppliers().size(); k++) {
 
 			executorPool.execute(accessory);
 		}
-		Thread.sleep(10000);
-		for (int l = 0; l < 2; l++) {
+		for (int l = 0; l < work.factory.getHeadWorker().getListWorkers().size(); l++) {
 
 			// executorPool.execute(
 			// new TaskSupplier<Engine>(work.getSupplierEngine(),
@@ -74,11 +74,11 @@ public class Application {
 			// work.factory.getStorageAccessory(), "accessory" + j));
 			executorPool.execute(worker);
 		}
-		for (int q = 0; q < 2; q++) {
+		for (int q = 0; q < 1; q++) {
 			executorPool.execute(sail);
 		}
 
-		System.out.println("y");
+		// System.out.println("y");
 		// submit work to the thread pool
 		// for (int i = 0; i < 1; i++) {
 		// executorPool.execute(new WorkerThread(work, "car" + i));
@@ -90,7 +90,7 @@ public class Application {
 		// shut down the pool
 
 		// shut down the monitor thread
-		Thread.sleep(30000);
+		// Thread.sleep(30000);
 
 		executorPool.shutdown();
 		monitor.shutdown();

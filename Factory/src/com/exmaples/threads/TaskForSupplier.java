@@ -21,23 +21,74 @@ public class TaskForSupplier<T extends Item> implements Runnable {
 	}
 
 	public void processCommand() throws InterruptedException {
-		if (to.getValue() == to.getSize()) {
-			while (to.getValue() >= to.getSize()) {
-				synchronized (obj.getIsFullItem()) {
-					obj.getIsFullItem().wait();
-				}
-			}
-		}
-		synchronized (this) {
-			supplier = performer.getListSuppliers().pollFirst();
-			performer.getListSuppliers().addLast(supplier);
-			item = supplier.createNewItem();
-			to.addItem(item);
-			Thread.sleep(supplier.getSpeed());
-		}
+		switch (to.getName()) {
+		case "Engine":
+			synchronized (this) {
+				if (to.getValue() == to.getSize()) {
+					while (to.getValue() >= to.getSize()) {
 
-		synchronized (obj.getIsEmptyItem()) {
-			obj.getIsEmptyItem().notifyAll();
+						synchronized (obj.getIsFullEngine()) {
+							obj.getIsFullEngine().wait();
+						}
+					}
+				}
+
+				supplier = performer.getListSuppliers().pollFirst();
+				performer.getListSuppliers().addLast(supplier);
+				item = supplier.createNewItem();
+				to.addItem(item);
+				Thread.sleep(supplier.getSpeed());
+			}
+
+			synchronized (obj.getIsEmptyEngine()) {
+				obj.getIsEmptyEngine().notifyAll();
+			}
+
+		case "Body":
+			synchronized (this)
+
+			{
+				if (to.getValue() == to.getSize()) {
+					while (to.getValue() >= to.getSize()) {
+
+						synchronized (obj.getIsFullBody()) {
+							obj.getIsFullBody().wait();
+						}
+					}
+				}
+				supplier = performer.getListSuppliers().pollFirst();
+				performer.getListSuppliers().addLast(supplier);
+				item = supplier.createNewItem();
+				to.addItem(item);
+				Thread.sleep(supplier.getSpeed());
+			}
+			synchronized (obj.getIsEmptyBody()) {
+				obj.getIsEmptyBody().notifyAll();
+			}
+
+		case "Accessory":
+			synchronized (this)
+
+			{
+				if (to.getValue() == to.getSize()) {
+					while (to.getValue() >= to.getSize()) {
+
+						synchronized (obj.getIsFullEngine()) {
+							obj.getIsFullEngine().wait();
+						}
+					}
+				}
+				supplier = performer.getListSuppliers().pollFirst();
+				performer.getListSuppliers().addLast(supplier);
+				item = supplier.createNewItem();
+				to.addItem(item);
+				Thread.sleep(supplier.getSpeed());
+			}
+
+			synchronized (obj.getIsEmptyAccessory()) {
+				obj.getIsEmptyAccessory().notifyAll();
+			}
+
 		}
 	}
 
@@ -46,8 +97,9 @@ public class TaskForSupplier<T extends Item> implements Runnable {
 
 		int count = 0;
 		System.out.println(Thread.currentThread().getName() + " Start. Command = " + command);
-
-		while (count < performer.getListSuppliers().size()) {
+		System.out.println(performer.getListSuppliers().size());
+		// while (count < }
+		{
 			try {
 				processCommand();
 				Thread.sleep(10);
