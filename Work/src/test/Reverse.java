@@ -6,7 +6,7 @@ public class Reverse {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int[] a = { 5, 6, 1, 3, 4, 5, 44, 4, 4 };
-		// test.Sortirovka.sortBubl(a);
+		test.Sortirovka.sortBubl(a);
 		System.out.println(Arrays.toString(a));
 
 		System.out.println(Arrays.toString(reverseTwo(a)));
@@ -14,12 +14,10 @@ public class Reverse {
 	}
 
 	public static int[] reverseTwo(int[] arr) {
-		int temp = 0;
 		int[] result = new int[arr.length];
-		for (int i = 0; i < arr.length - 1; i++) {
-			temp = arr[arr.length - 1 - i];
-			result[arr.length - 1 - i] = arr[i];
-			result[i] = temp;
+		for (int i = 0; i <= arr.length - 1; i++) {
+			result[i] = arr[arr.length - 1 - i];
+
 		}
 
 		return result;
