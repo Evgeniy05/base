@@ -15,6 +15,7 @@ public class Performer<T extends Item> {
 	}
 
 	public void loadSuppliers(ItemCreator<T> creator) {
+		// FOR each supplier create ItemCreate
 		if (creator.getName().equals(engine)) {
 			for (int i = 0; i < suppliersEngine; i++) {
 				listSuppliers.add(new Supplier<T>(engine, creator));

@@ -15,8 +15,11 @@ public class Application {
 
 	public static void main(String args[]) throws InterruptedException {
 		WorkSpace work = new WorkSpace();
+		// Create factory(have four storage-Engine,Body,Accessory,Auto) with
+		// workers plus Suppliers;
 		// System.out.println(work.factory.getStorageAccessory().getName());
 		ObjectSychronized obj = new ObjectSychronized();
+		// Create monitors for workerThreads
 		// Get the ThreadFactory implementation to use
 		ThreadFactory threadFactory = Executors.defaultThreadFactory();
 		RejectedExecutionHandlerImpl RejectedExecutionHandler = new RejectedExecutionHandlerImpl();
@@ -27,79 +30,38 @@ public class Application {
 		MyMonitorThread monitor = new MyMonitorThread(executorPool, 1);
 		Thread monitorThread = new Thread(monitor);
 		monitorThread.start();
-		// submit work to the thread pool
-		// for (int i = 0; i < 5; i++) {
-		//
-		// executorPool.execute(
-		// new TaskSupplier<Engine>(work.getSupplierEngine(),
-		// work.factory.getStorageEngine(), "engine" + i));
-		// executorPool
-		// .execute(new TaskSupplier<Body>(work.getSupplierBody(),
-		// work.factory.getStorageBody(), "body" + i));
-		// executorPool.execute(new
-		// TaskSupplier<Accessory>(work.getSupplierAccessory(),
-		// work.factory.getStorageAccessory(), "accessory" + i));
-		// }
 		TaskForSupplier<Engine> engine = new TaskForSupplier<Engine>(work.getSupplierEngine(),
 				work.factory.getStorageEngine(), obj, "engine");
+		// Task for threads create engine
 		TaskForSupplier<Body> body = new TaskForSupplier<Body>(work.getSupplierBody(), work.factory.getStorageBody(),
 				obj, "body");
+		// Task for threads create body
 		TaskForSupplier<Accessory> accessory = new TaskForSupplier<Accessory>(work.getSupplierAccessory(),
 				work.factory.getStorageAccessory(), obj, "accessory");
+		// Task for threads create accessory
 		WorkerThread worker = new WorkerThread(work, "car", obj);
+		// Task for WorkerThreads create auto
 		Sails sail = new Sails(work, obj, "sail");
+		// Task for threads sail car
 		for (int j = 0; j < work.getSupplierEngine().getListSuppliers().size(); j++) {
 			executorPool.execute(engine);
 		}
 		for (int i = 0; i < work.getSupplierBody().getListSuppliers().size(); i++) {
-
 			executorPool.execute(body);
-
 		}
 
 		for (int k = 0; k < work.getSupplierAccessory().getListSuppliers().size(); k++) {
-
 			executorPool.execute(accessory);
 		}
 		for (int l = 0; l < work.factory.getHeadWorker().getListWorkers().size(); l++) {
-
-			// executorPool.execute(
-			// new TaskSupplier<Engine>(work.getSupplierEngine(),
-			// work.factory.getStorageEngine(), "engine" + j));
-			// executorPool
-			// .execute(new TaskSupplier<Body>(work.getSupplierBody(),
-			// work.factory.getStorageBody(), "body" + j));
-			// executorPool.execute(new
-			// TaskSupplier<Accessory>(work.getSupplierAccessory(),
-			// work.factory.getStorageAccessory(), "accessory" + j));
 			executorPool.execute(worker);
 		}
 		for (int q = 0; q < 1; q++) {
 			executorPool.execute(sail);
 		}
 
-		// System.out.println("y");
-		// submit work to the thread pool
-		// for (int i = 0; i < 1; i++) {
-		// executorPool.execute(new WorkerThread(work, "car" + i));
-		// work.factory.getStorageEngine().addItem(new Engine("", 1));
-		// work.factory.getStorageBody().addItem(new Body("", 1));
-		// work.factory.getStorageAccessory().addItem(new Accessory("", 1));
-		// System.out.println(work.factory.getStorageEngine().getItem().getId());
-		// }
-		// shut down the pool
-
-		// shut down the monitor thread
-		// Thread.sleep(30000);
-
 		executorPool.shutdown();
 		monitor.shutdown();
-		// executorPool.remove(engine);
-		// executorPool.remove(body);
-		// executorPool.remove(accessory);
-		// executorPool.remove(worker);
-		// executorPool.remove(sail);
-
 	}
 
 }
